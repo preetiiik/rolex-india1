@@ -15,6 +15,7 @@ export function PrivacyPolicy() {
           className="hidden sm:block absolute top-1/2 -translate-y-1/2 right-8 lg:right-12 h-16 lg:h-20 w-auto"
         />
         <div className="max-w-[1100px] mx-auto">
+          <img src={logo} alt="Rolex India" className="sm:hidden h-10 w-auto mb-6" />
           <p className="text-sm text-white/60 mb-3">Rolex India</p>
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
             Privacy Policy
@@ -169,6 +170,7 @@ export function TermsOfService() {
           className="hidden sm:block absolute top-1/2 -translate-y-1/2 right-8 lg:right-12 h-16 lg:h-20 w-auto"
         />
         <div className="max-w-[1100px] mx-auto">
+          <img src={logo} alt="Rolex India" className="sm:hidden h-10 w-auto mb-6" />
           <p className="text-sm text-white/60 mb-3">Rolex India</p>
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
             Terms of Service

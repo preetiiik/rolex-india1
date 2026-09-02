@@ -40,14 +40,14 @@ export default function Products() {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-4 left-4">
-                  <div className="h-9 w-9 group-hover:w-[148px] bg-white rounded-full flex items-center overflow-hidden transition-all duration-300 ease-in-out px-0 group-hover:px-3">
-                    <span className="text-[13px] font-medium text-gray-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 whitespace-nowrap mr-2">
+                  <div className="h-9 w-auto sm:w-9 sm:group-hover:w-[148px] bg-white rounded-full flex items-center overflow-hidden transition-all duration-300 ease-in-out px-3 sm:px-0 sm:group-hover:px-3">
+                    <span className="text-[13px] font-medium text-gray-900 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 sm:delay-100 whitespace-nowrap mr-2">
                       View product
                     </span>
-                    <span className="flex-shrink-0 flex items-center justify-center w-full h-full group-hover:w-auto group-hover:h-auto">
+                    <span className="flex-shrink-0 flex items-center justify-center">
                       <ArrowUpRight
                         size={14}
-                        className="transition-transform duration-300 -rotate-45 group-hover:rotate-0 mx-auto"
+                        className="transition-transform duration-300 rotate-0 sm:-rotate-45 sm:group-hover:rotate-0 mx-auto"
                       />
                     </span>
                   </div>

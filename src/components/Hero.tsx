@@ -48,7 +48,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col overflow-hidden bg-gray-900">
+    <section id="home" className="relative min-h-[78vh] sm:min-h-screen flex flex-col overflow-hidden bg-gray-900">
       <style>{`
         @keyframes heroKenBurns {
           0% { transform: scale(1) translate(0, 0); }

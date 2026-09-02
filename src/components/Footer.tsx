@@ -1,5 +1,4 @@
-
-import { Mail, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { footerNav } from "../data/content";
 import logo from "../assets/logo.png";
@@ -22,10 +21,15 @@ export default function Footer() {
   href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
   target="_blank"
   rel="noopener noreferrer"
-  className="block text-[14px] text-white/70 leading-relaxed max-w-[280px] hover:text-white transition-colors duration-300"
+  className="flex gap-2.5 text-[14px] text-white/70 visited:text-white/70 no-underline leading-6 max-w-[280px] hover:text-white transition-colors duration-300"
 >
-  B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubli,
-  Karnataka 580030, India
+  <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
+    <MapPin size={15} className="text-white/50" />
+  </span>
+  <span>
+    B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubli,
+    Karnataka 580030, India
+  </span>
 </a>
           </div>
 
@@ -146,4 +150,3 @@ export default function Footer() {
     </footer>
   );
 }
-
