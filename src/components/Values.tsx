@@ -17,7 +17,7 @@ export default function Values() {
             3
           </span>
           <span className="text-xs sm:text-[13px] font-medium border border-white/30 text-white rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-            Values
+            What Drives Us
           </span>
         </div>
 

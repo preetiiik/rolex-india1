@@ -22,7 +22,7 @@ export default function Contact() {
             6
           </span>
           <span className="text-xs sm:text-[13px] font-medium border border-gray-300 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-            Get In Touch
+            Connect With Us
           </span>
         </div>
 

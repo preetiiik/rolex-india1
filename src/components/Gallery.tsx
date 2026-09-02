@@ -13,7 +13,7 @@ export default function Gallery() {
             5
           </span>
           <span className="text-xs sm:text-[13px] font-medium border border-gray-200 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-            Gallery
+            A Look Inside 
           </span>
         </div>
 
