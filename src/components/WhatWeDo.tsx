@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Boxes, Cog, Layers, Package, Wrench } from "lucide-react";
+// import { Boxes, Cog, Layers, Package, Wrench } from "lucide-react";
 import { whatWeDo } from "../data/content";
 
-const icons: Record<number, typeof Layers> = {
-  1: Layers,
-  2: Cog,
-  3: Boxes,
-  4: Wrench,
-  5: Package,
-};
+// const icons: Record<number, typeof Layers> = {
+//   1: Layers,
+//   2: Cog,
+//   3: Boxes,
+//   4: Wrench,
+//   5: Package,
+// };
 
 export default function WhatWeDo() {
   const [hovered, setHovered] = useState<number | null>(null);
