@@ -11,10 +11,10 @@ export default function About() {
     <section id="about" className="bg-white pt-16 sm:pt-20 lg:pt-32 pb-12 sm:pb-16 lg:pb-24 overflow-hidden">
       <div className="max-w-[1440px] mx-auto">
         <div className="px-5 sm:px-8 lg:px-12 flex items-center gap-3 mb-6 sm:mb-8">
-          <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
+          <span className="w-6 h-6 sm:w-7 sm:h-7  bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
             1
           </span>
-          <span className="text-xs sm:text-[13px] font-medium border border-gray-200 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
+          <span className="text-xs sm:text-[13px] font-medium border border-gray-200  px-3 sm:px-4 py-1 sm:py-1.5">
             Introducing Rolex India
           </span>
         </div>
@@ -31,7 +31,7 @@ export default function About() {
             <img
               src={aboutImg}
               alt="Rolex India manufacturing facility"
-              className="w-full aspect-[438/346] object-cover rounded-xl sm:rounded-2xl"
+              className="w-full aspect-[438/346] object-cover  "
             />
 
             <div className="text-gray-900">
@@ -51,7 +51,7 @@ export default function About() {
               <ul className="mb-5 space-y-2">
                 {diversification.map((d) => (
                   <li key={d} className="flex gap-3 text-[15px] sm:text-base leading-[1.6] font-medium">
-                    <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-[#F26522] flex-shrink-0" />
+                    <span className="mt-2.5 w-1.5 h-1.5  bg-[#F26522] flex-shrink-0" />
                     <span>{d}</span>
                   </li>
                 ))}

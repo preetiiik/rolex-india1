@@ -9,10 +9,10 @@ const listClass = "list-disc pl-6 space-y-2 text-gray-600 leading-7";
 export function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative bg-[#0a1a3a] text-white px-5 sm:px-8 lg:px-12 pt-28 sm:pt-32 pb-16 sm:pb-20">
+      <section className="relative bg-[#14282E] text-white px-5 sm:px-8 lg:px-12 pt-32 sm:pt-36 pb-16 sm:pb-20">
         <Navbar />
         <div className="max-w-[1100px] mx-auto">
-          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#F26522] mb-3">Rolex India</p>
+          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#4FA8B8] mb-3">Rolex India</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
             Privacy Policy
           </h1>
@@ -147,7 +147,7 @@ export function PrivacyPolicy() {
         </section>
 
         <div className="mt-12 pt-8 border-t border-gray-200">
-          <a href="/" className="text-[#F26522] hover:underline">
+          <a href="/" className="text-[#4FA8B8] hover:underline">
             ← Back to Home
             </a>
         </div>
@@ -161,10 +161,10 @@ export function PrivacyPolicy() {
 export function TermsOfService() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative bg-[#0a1a3a] text-white px-5 sm:px-8 lg:px-12 pt-28 sm:pt-32 pb-16 sm:pb-20">
+      <section className="relative bg-[#14282E] text-white px-5 sm:px-8 lg:px-12 pt-32 sm:pt-36 pb-16 sm:pb-20">
         <Navbar />
         <div className="max-w-[1100px] mx-auto">
-          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#F26522] mb-3">Rolex India</p>
+          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#4FA8B8] mb-3">Rolex India</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
             Terms of Service
           </h1>
@@ -300,7 +300,7 @@ export function TermsOfService() {
         </section>
 
         <div className="mt-12 pt-8 border-t border-gray-200">
-          <a href="/" className="text-[#F26522] hover:underline">
+          <a href="/" className="text-[#4FA8B8] hover:underline">
         ← Back to Home
         </a>
         </div>

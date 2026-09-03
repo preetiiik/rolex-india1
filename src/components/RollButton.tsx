@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 interface RollButtonProps {
   text: string;
   onClick?: () => void;
-  variant?: "dark" | "orange" | "outline";
+  variant?: "dark" | "orange" | "outline" | "teal";
   size?: "sm" | "md";
   className?: string;
   type?: "button" | "submit";
@@ -22,11 +22,15 @@ export default function RollButton({
       ? "bg-gray-900 text-white"
       : variant === "orange"
       ? "bg-[#F26522] hover:bg-[#e05a1a] text-white"
+      : variant === "teal"
+      ? "bg-[#2F6F7E] hover:bg-[#265966] text-white"
       : "bg-white text-gray-900 border border-gray-200";
 
   const arrowWrap =
     variant === "orange"
       ? "text-[#F26522]"
+      : variant === "teal"
+      ? "text-[#2F6F7E]"
       : variant === "outline"
       ? "text-gray-900"
       : "text-gray-900";
@@ -39,7 +43,7 @@ export default function RollButton({
     <button
       type={type}
       onClick={onClick}
-      className={`group inline-flex items-center gap-3 rounded-full ${bg} ${pad} ${fontSize} font-medium transition-colors duration-300 ${className}`}
+      className={`group inline-flex items-center gap-3  ${bg} ${pad} ${fontSize} font-medium transition-colors duration-300 ${className}`}
     >
       <span className="overflow-hidden h-[18px] sm:h-[20px]">
         <span
@@ -51,7 +55,7 @@ export default function RollButton({
         </span>
       </span>
       <span
-        className={`relative flex items-center justify-center ${circle} rounded-full bg-white flex-shrink-0`}
+        className={`relative flex items-center justify-center ${circle}  bg-white flex-shrink-0`}
       >
         <ArrowRight
           size={size === "sm" ? 12 : 14}

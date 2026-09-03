@@ -17,10 +17,10 @@ export default function Contact() {
     <section id="contact" className="bg-[#F5F5F5] pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28">
       <div className="max-w-[1440px] mx-auto">
         <div className="px-5 sm:px-8 lg:px-12 flex items-center gap-3 mb-6 sm:mb-8">
-          <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
+          <span className="w-6 h-6 sm:w-7 sm:h-7  bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
             6
           </span>
-          <span className="text-xs sm:text-[13px] font-medium border border-gray-300 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
+          <span className="text-xs sm:text-[13px] font-medium border border-gray-300  px-3 sm:px-4 py-1 sm:py-1.5">
             Get In Touch
           </span>
         </div>
@@ -38,7 +38,7 @@ export default function Contact() {
               e.preventDefault();
               setSubmitted(true);
             }}
-            className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 max-w-[820px]"
+            className="bg-white   p-6 sm:p-10 lg:p-12 max-w-[820px]"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               {fields.map((f) => (
@@ -49,7 +49,7 @@ export default function Contact() {
                   <input
                     type={f.type ?? "text"}
                     required={f.required}
-                    className="w-full rounded-xl border border-gray-200 px-4 py-3 text-[14px] text-gray-900 outline-none focus:border-gray-900 transition-colors duration-300"
+                    className="w-full  border border-gray-200 px-4 py-3 text-[14px] text-gray-900 outline-none focus:border-gray-900 transition-colors duration-300"
                   />
                 </label>
               ))}

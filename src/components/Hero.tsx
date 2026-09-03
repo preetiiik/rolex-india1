@@ -47,7 +47,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-[88vh] sm:min-h-screen flex flex-col overflow-hidden bg-gray-900">
+    <section id="home" className="relative min-h-dvh flex flex-col overflow-hidden bg-gray-900">
       <style>{`
         @keyframes heroKenBurns {
           0% { transform: scale(1) translate(0, 0); }
@@ -80,32 +80,29 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/15" />
 
       <Navbar />
 
       <div className="flex-1" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-10 items-end">
-          <h1
-            className="font-black uppercase text-white leading-[0.92] tracking-tight"
-            style={{ fontSize: "clamp(2.75rem, 8.5vw, 6.5rem)" }}
-          >
-            We provide quality
-            <br />
-            Steel Products
-          </h1>
+        <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.1em] text-white mb-4">
+          <span className="w-8 h-[2px] bg-[#4FA8B8]" />
+          Rolex India
+        </p>
+        <h1
+          className="font-bold text-white leading-[1.05] tracking-tight max-w-[720px]"
+          style={{ fontSize: "clamp(2.25rem, 6vw, 4rem)" }}
+        >
+          We provide quality Steel Products
+        </h1>
+        <p className="text-white/70 text-[14px] sm:text-[15px] mt-4 mb-7">
+          Trusted in steel since 1990
+        </p>
+        <RollButton text="Contact Us" variant="teal" onClick={() => (window.location.hash = "#contact")} />
 
-          <div className="bg-[#F26522] rounded-lg p-6 sm:p-7 flex-shrink-0 w-full">
-            <p className="text-white text-[14px] sm:text-[15px] font-medium leading-snug mb-5">
-              Trusted in steel since 1990
-            </p>
-            <RollButton text="Contact Us" variant="dark" onClick={() => (window.location.hash = "#contact")} />
-          </div>
-        </div>
-
-        <div className="mt-8 sm:mt-10 flex items-center gap-2.5" role="tablist" aria-label="Hero background slides">
+        <div className="mt-10 sm:mt-12 flex items-center gap-2.5" role="tablist" aria-label="Hero background slides">
           {SLIDES.map((_, index) => {
             const isActive = index === activeIndex;
             return (
@@ -120,8 +117,8 @@ export default function Hero() {
                 className="py-1"
               >
                 <span
-                  className={`block h-[3px] rounded-full transition-all duration-300 ${
-                    isActive ? "w-8 bg-[#F26522]" : "w-4 bg-white/40 hover:bg-white/70"
+                  className={`block h-[3px]  transition-all duration-300 ${
+                    isActive ? "w-8 bg-white" : "w-4 bg-white/40 hover:bg-white/70"
                   }`}
                 />
               </button>

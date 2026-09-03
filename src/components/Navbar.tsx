@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Clock, Menu, X } from "lucide-react";
+import { Clock, Mail, Menu, Phone, X } from "lucide-react";
 import { navLinks } from "../data/content";
 import RollButton from "./RollButton";
 import { useLiveTime } from "../hooks/useLiveTime";
@@ -24,39 +24,57 @@ export default function Navbar() {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <nav className="max-w-[1440px] mx-auto flex items-center px-5 sm:px-8 lg:px-12 py-3 sm:py-4">
-          <div className="flex flex-1 items-center">
-            <a href={isHome ? "#home" : "/"} className="flex items-center gap-2.5">
-              <img src={logo} alt="Rolex India" className="h-9 w-9 sm:h-10 sm:w-10 rounded-md object-cover" />
-              <span className="hidden sm:block text-[15px] font-black uppercase tracking-tight text-gray-900">
-                Rolex India
-              </span>
+        {/* Utility bar */}
+        <div className="hidden sm:block bg-[#EAF1F1] border-b border-gray-200">
+          <div className="max-w-[1440px] mx-auto flex items-center justify-between px-5 sm:px-8 lg:px-12 py-1.5">
+            <a
+              href="tel:+919620664429"
+              className="flex items-center gap-1.5 text-[12px] font-medium text-gray-600 hover:text-[#2F6F7E] transition-colors duration-300"
+            >
+              <Phone size={12} />
+              Call Now +91 9620664429
             </a>
-            <div className="hidden md:flex flex-1 items-center justify-center gap-7 lg:gap-9">
-              {navLinks
-                .filter((l) => l.label !== "Enquiry")
-                .map((l) => (
-                  <a
-                    key={l.label}
-                    href={sectionHref(l.href)}
-                    className="text-[12px] font-bold uppercase tracking-wide text-gray-700 hover:text-[#F26522] transition-colors duration-300"
-                  >
-                    {l.label}
-                  </a>
-                ))}
-            </div>
+            <a
+              href="mailto:rolexindiahbl@gmail.com"
+              className="flex items-center gap-1.5 text-[12px] font-medium text-gray-600 hover:text-[#2F6F7E] transition-colors duration-300"
+            >
+              <Mail size={12} />
+              rolexindiahbl@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <nav className="max-w-[1440px] mx-auto flex items-center px-5 sm:px-8 lg:px-12 py-3 sm:py-4">
+          <a href={isHome ? "#home" : "/"} className="flex items-center gap-2.5 mr-8 lg:mr-12">
+            <img src={logo} alt="Rolex India" className="h-9 w-9 sm:h-10 sm:w-10  object-cover" />
+            <span className="hidden sm:block text-[15px] font-bold text-gray-900">
+              Rolex India
+            </span>
+          </a>
+          <div className="hidden md:flex flex-1 items-center gap-6 lg:gap-8">
+            {navLinks
+              .filter((l) => l.label !== "Enquiry")
+              .map((l) => (
+                <a
+                  key={l.label}
+                  href={sectionHref(l.href)}
+                  className="text-[13px] font-medium text-gray-700 hover:text-[#2F6F7E] transition-colors duration-300"
+                >
+                  {l.label}
+                </a>
+              ))}
           </div>
 
           <div className="hidden md:flex items-center shrink-0">
-            <RollButton text="Get In Touch" size="md" variant="orange" onClick={() => goToSection("#contact")} />
+            <RollButton text="Get In Touch" size="md" variant="teal" onClick={() => goToSection("#contact")} />
           </div>
 
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden flex items-center gap-2 bg-[#F26522] text-white rounded-md pl-4 pr-2 py-2 text-[13px] font-bold uppercase"
+            className="md:hidden ml-auto flex items-center gap-2 bg-[#2F6F7E] text-white pl-4 pr-2 py-2 text-[13px] font-bold uppercase"
           >
             Menu
-            <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+            <span className="w-6 h-6  bg-white/20 flex items-center justify-center">
               <Menu size={14} />
             </span>
           </button>
@@ -71,19 +89,19 @@ export default function Navbar() {
       >
         <div className="absolute inset-0 bg-black/60" onClick={() => setOpen(false)} />
         <div
-          className={`absolute left-3 right-3 bottom-3 bg-white rounded-2xl p-6 transition-transform duration-500 ${
+          className={`absolute left-3 right-3 bottom-3 bg-white  p-6 transition-transform duration-500 ${
             open ? "translate-y-0" : "translate-y-full"
           }`}
           style={{ transitionTimingFunction: "cubic-bezier(0.32,0.72,0,1)" }}
         >
           <div className="flex items-center justify-between mb-8">
-            <span className="flex items-center gap-1.5 text-[13px] text-gray-600 bg-gray-100 rounded-full px-3 py-1.5">
+            <span className="flex items-center gap-1.5 text-[13px] text-gray-600 bg-gray-100  px-3 py-1.5">
               <Clock size={14} />
               {time} in Hubballi
             </span>
             <button
               onClick={() => setOpen(false)}
-              className="bg-gray-900 text-white rounded-full w-9 h-9 flex items-center justify-center"
+              className="bg-gray-900 text-white  w-9 h-9 flex items-center justify-center"
             >
               <X size={16} />
             </button>
@@ -104,7 +122,7 @@ export default function Navbar() {
           </div>
           <RollButton
             text="Enquiry"
-            variant="orange"
+            variant="teal"
             onClick={() => {
               setOpen(false);
               goToSection("#contact");

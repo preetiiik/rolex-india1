@@ -7,10 +7,10 @@ export default function WhatWeDo() {
     <section className="bg-[#F5F5F5] pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28 overflow-hidden">
       <div className="max-w-[1440px] mx-auto">
         <div className="px-5 sm:px-8 lg:px-12 flex items-center gap-3 mb-6 sm:mb-8">
-          <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
+          <span className="w-6 h-6 sm:w-7 sm:h-7  bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
             2
           </span>
-          <span className="text-xs sm:text-[13px] font-medium border border-gray-300 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
+          <span className="text-xs sm:text-[13px] font-medium border border-gray-300  px-3 sm:px-4 py-1 sm:py-1.5">
             What We Do
           </span>
         </div>
@@ -28,7 +28,7 @@ export default function WhatWeDo() {
               {whatWeDo.map((item) => (
                 <li
                   key={item.n}
-                  className="group flex gap-4 sm:gap-5 rounded-xl px-3 py-3 sm:px-4 sm:py-4 -mx-3 sm:-mx-4 transition-colors duration-300 hover:bg-white cursor-default"
+                  className="group flex gap-4 sm:gap-5  px-3 py-3 sm:px-4 sm:py-4 -mx-3 sm:-mx-4 transition-colors duration-300 hover:bg-white cursor-default"
                 >
                   <span className="text-2xl sm:text-3xl font-medium text-gray-300 leading-none w-8 flex-shrink-0 transition-colors duration-300 group-hover:text-[#F26522]">
                     {item.n}
@@ -41,14 +41,14 @@ export default function WhatWeDo() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-              <div className="sm:w-[42%] w-full aspect-[438/346] rounded-xl sm:rounded-2xl overflow-hidden">
+              <div className="sm:w-[42%] w-full aspect-[438/346]   overflow-hidden">
                 <img
                   src={img1}
                   alt="Bright steel bars in production"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
               </div>
-              <div className="sm:w-[58%] w-full aspect-[900/600] rounded-xl sm:rounded-2xl overflow-hidden">
+              <div className="sm:w-[58%] w-full aspect-[900/600]   overflow-hidden">
                 <img
                   src={img2}
                   alt="Manufacturing facility floor"

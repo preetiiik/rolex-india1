@@ -5,16 +5,16 @@ import logo from "../assets/logo.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#F26522] text-white pt-14 sm:pt-16 lg:pt-20 pb-8">
+    <footer className="bg-[#14181C] text-white pt-14 sm:pt-16 lg:pt-20 pb-8">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 sm:pb-16 border-b border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 sm:pb-16 border-b border-white/10">
 
           {/* Logo & Address */}
           <div>
             <img
               src={logo}
               alt="Rolex India"
-              className="h-12 w-12 rounded-md object-cover mb-5"
+              className="h-12 w-12  object-cover mb-5"
             />
 
             <a
@@ -44,7 +44,7 @@ export default function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300"
+                    className="text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300"
                   >
                     {l.label}
                   </a>
@@ -65,7 +65,7 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+919620664429"
-                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300"
+                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300"
                 >
                   <Phone
                     size={15}
@@ -81,7 +81,7 @@ export default function Footer() {
                   href="https://wa.me/919738347599"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300"
+                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300"
                 >
                   <FaWhatsapp
                     size={17}
@@ -95,7 +95,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:rolexindiahbl@gmail.com"
-                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300 break-all"
+                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300 break-all"
                 >
                   <Mail
                     size={15}

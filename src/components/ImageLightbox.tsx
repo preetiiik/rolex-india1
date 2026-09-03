@@ -34,7 +34,7 @@ export default function ImageLightbox({ images, index, onClose, onNavigate }: Im
 
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-300"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-10 h-10  bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-300"
         aria-label="Close"
       >
         <X size={18} />
@@ -44,14 +44,14 @@ export default function ImageLightbox({ images, index, onClose, onNavigate }: Im
         <>
           <button
             onClick={() => onNavigate((index - 1 + images.length) % images.length)}
-            className="absolute left-3 sm:left-6 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-300"
+            className="absolute left-3 sm:left-6 z-10 w-10 h-10 sm:w-12 sm:h-12  bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-300"
             aria-label="Previous image"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={() => onNavigate((index + 1) % images.length)}
-            className="absolute right-3 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-300"
+            className="absolute right-3 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12  bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors duration-300"
             aria-label="Next image"
           >
             <ChevronRight size={20} />
@@ -62,7 +62,7 @@ export default function ImageLightbox({ images, index, onClose, onNavigate }: Im
       <img
         src={images[index]}
         alt={`Gallery image ${index + 1}`}
-        className="relative z-[5] max-w-full max-h-[calc(100svh-2rem)] sm:max-h-[calc(100vh-4rem)] object-contain rounded-lg sm:rounded-2xl"
+        className="relative z-[5] max-w-full max-h-[calc(100svh-2rem)] sm:max-h-[calc(100vh-4rem)] object-contain  "
       />
     </div>
   );

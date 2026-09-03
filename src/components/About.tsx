@@ -10,25 +10,24 @@ const diversification = [
 export default function About() {
   return (
     <section id="about" className="bg-white overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 lg:pt-28">
-        <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#F26522] mb-4">
-          Introducing Rolex India
-        </p>
-        <h2
-          className="font-black uppercase leading-[0.95] tracking-tight text-gray-900 mb-10 sm:mb-14"
-          style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
-        >
-          About Us
-        </h2>
-      </div>
-
-      {/* Full-width banner */}
-      <div className="relative h-[40vh] sm:h-[50vh] lg:h-[58vh] mb-12 sm:mb-16">
-        <img
-          src={aboutImg}
-          alt="Rolex India manufacturing facility"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      {/* Parallax banner: background stays fixed while heading scrolls over it */}
+      <div
+        className="relative h-[46vh] sm:h-[56vh] lg:h-[64vh] mb-12 sm:mb-16 bg-cover bg-center bg-fixed flex items-end"
+        style={{ backgroundImage: `url(${aboutImg})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-[#14282E]/85 via-[#14282E]/50 to-[#14282E]/30" />
+        <div className="relative z-10 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-10 sm:pb-14">
+          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#4FA8B8] mb-4">
+            Introducing Rolex India
+          </p>
+          <h2
+            className="font-bold leading-[1.05] tracking-tight text-white"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+          >
+            About Us
+          </h2>
+          <span className="block w-14 h-[3px] bg-[#4FA8B8] mt-5" />
+        </div>
       </div>
 
       {/* Content row */}
@@ -38,7 +37,7 @@ export default function About() {
             <img
               src={barsBundleImg}
               alt="Bundle of finished steel bars"
-              className="w-full aspect-[4/5] object-cover rounded-lg lg:sticky lg:top-24"
+              className="w-full aspect-[4/5] object-cover  lg:sticky lg:top-24"
             />
           </div>
 
@@ -50,7 +49,7 @@ export default function About() {
               worldwide.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.1fr] gap-8 sm:gap-10 mb-8 pt-8 border-t-2 border-gray-900">
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.1fr] gap-8 sm:gap-10 mb-8 pt-8 border-t border-gray-200">
               <p className="text-[15px] leading-[1.7] text-gray-600">
                 Over the years, we have expanded our capabilities beyond trading, venturing into
                 the production of Bright Bars ranging from 4mm to 55mm. Our unwavering commitment
@@ -60,8 +59,8 @@ export default function About() {
 
               <ul className="space-y-3">
                 {diversification.map((d) => (
-                  <li key={d} className="flex gap-3 text-[14px] sm:text-[15px] leading-[1.5] font-medium text-gray-800 bg-gray-50 rounded-md px-4 py-3">
-                    <span className="text-[#F26522] font-black flex-shrink-0">→</span>
+                  <li key={d} className="flex gap-3 text-[14px] sm:text-[15px] leading-[1.5] font-medium text-gray-800 bg-[#EAF1F1]  px-4 py-3">
+                    <span className="text-[#2F6F7E] font-bold flex-shrink-0">→</span>
                     <span>{d}</span>
                   </li>
                 ))}
@@ -87,7 +86,7 @@ export default function About() {
               excellence.
             </p>
 
-            <p className="text-[18px] sm:text-xl leading-[1.6] font-black uppercase text-[#F26522]">
+            <p className="text-[18px] sm:text-xl leading-[1.6] font-bold text-[#2F6F7E]">
               Let's build the future together!
             </p>
           </div>
