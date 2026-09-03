@@ -11,20 +11,23 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="relative z-30 w-full max-w-[650px] mx-auto px-3 py-2 sm:px-5 sm:py-3">
-        <nav className="bg-white rounded-full p-[5px] flex items-center shadow-sm">
-          <div className="flex flex-1 items-center pl-1">
-            <a href="#home" className="flex items-center">
-              <img src={logo} alt="Rolex India" className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl object-cover" />
+      <div className="absolute top-0 left-0 right-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200">
+        <nav className="max-w-[1440px] mx-auto flex items-center px-5 sm:px-8 lg:px-12 py-3 sm:py-4">
+          <div className="flex flex-1 items-center">
+            <a href="#home" className="flex items-center gap-2.5">
+              <img src={logo} alt="Rolex India" className="h-9 w-9 sm:h-10 sm:w-10 rounded-md object-cover" />
+              <span className="hidden sm:block text-[15px] font-black uppercase tracking-tight text-gray-900">
+                Rolex India
+              </span>
             </a>
-            <div className="hidden md:flex flex-1 items-center justify-evenly px-6 lg:px-10">
+            <div className="hidden md:flex flex-1 items-center justify-center gap-7 lg:gap-9">
               {navLinks
                 .filter((l) => l.label !== "Enquiry")
                 .map((l) => (
                   <a
                     key={l.label}
                     href={l.href}
-                    className="text-[14px] text-gray-900 hover:text-gray-500 transition-colors duration-300"
+                    className="text-[12px] font-bold uppercase tracking-wide text-gray-700 hover:text-[#F26522] transition-colors duration-300"
                   >
                     {l.label}
                   </a>
@@ -32,16 +35,16 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center pr-1 shrink-0">
-            <RollButton text="Enquiry" size="md" variant="dark" onClick={() => (window.location.hash = "#contact")} />
+          <div className="hidden md:flex items-center shrink-0">
+            <RollButton text="Get In Touch" size="md" variant="orange" onClick={() => (window.location.hash = "#contact")} />
           </div>
 
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden flex items-center gap-2 bg-gray-900 text-white rounded-full pl-4 pr-2 py-2 text-[13px] font-medium mr-1"
+            className="md:hidden flex items-center gap-2 bg-[#F26522] text-white rounded-md pl-4 pr-2 py-2 text-[13px] font-bold uppercase"
           >
             Menu
-            <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+            <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
               <Menu size={14} />
             </span>
           </button>
@@ -81,7 +84,7 @@ export default function Navbar() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="text-[28px] font-medium text-gray-900 py-1"
+                  className="text-[26px] font-black uppercase text-gray-900 py-1"
                 >
                   {l.label}
                 </a>

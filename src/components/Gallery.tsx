@@ -7,37 +7,34 @@ export default function Gallery() {
 
   return (
     <section id="gallery" className="bg-white pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28">
-      <div className="max-w-[1440px] mx-auto">
-        <div className="px-5 sm:px-8 lg:px-12 flex items-center gap-3 mb-6 sm:mb-8">
-          <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
-            5
-          </span>
-          <span className="text-xs sm:text-[13px] font-medium border border-gray-200 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-            A Look Inside 
-          </span>
-        </div>
-
-        <div className="px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1440px] mx-auto relative">
+        <div className="px-5 sm:px-8 lg:px-12 mb-10 sm:mb-14 lg:mb-16">
+          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#F26522] mb-4">
+            A Look Inside
+          </p>
           <h2
-            className="font-medium leading-[1.12] tracking-[-0.02em] text-gray-900 mb-10 sm:mb-14 lg:mb-16"
-            style={{ fontSize: "clamp(1.5rem, 4vw, 3.2rem)" }}
+            className="font-black uppercase leading-[0.95] tracking-tight text-gray-900"
+            style={{ fontSize: "clamp(2.25rem, 6vw, 4.25rem)" }}
           >
             Gallery
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 px-5 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-3 sm:gap-4 px-5 sm:px-8 lg:px-12 relative">
           {galleryImages.map((src, i) => (
             <div
               key={i}
               onClick={() => setActiveIndex(i)}
-              className="aspect-square rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer"
+              className={`relative rounded-xl overflow-hidden group cursor-pointer ${
+                i === 0 ? "col-span-2 row-span-2 aspect-square lg:aspect-auto" : "aspect-square"
+              }`}
             >
               <img
                 src={src}
                 alt={`Rolex India facility ${i + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           ))}
         </div>

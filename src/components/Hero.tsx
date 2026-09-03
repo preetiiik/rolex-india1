@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { ShieldCheck } from "lucide-react";
 import heroBg from "../assets/hero-bg.webp";
 import heroBg1 from "../assets/hero-bg-1.jpg";
 import heroBg2 from "../assets/hero-bg-2.png";
@@ -34,6 +33,11 @@ export default function Hero() {
     }, SLIDE_DURATION);
   };
 
+  const handleIndicatorClick = (index: number) => {
+    setActiveIndex(index);
+    startAutoplay();
+  };
+
   useEffect(() => {
     startAutoplay();
     return () => {
@@ -42,13 +46,8 @@ export default function Hero() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleIndicatorClick = (index: number) => {
-    setActiveIndex(index);
-    startAutoplay();
-  };
-
   return (
-    <section id="home" className="relative min-h-[72vh] sm:min-h-screen flex flex-col overflow-hidden bg-gray-900">
+    <section id="home" className="relative min-h-[88vh] sm:min-h-screen flex flex-col overflow-hidden bg-gray-900">
       <style>{`
         @keyframes heroKenBurns {
           0% { transform: scale(1) translate(0, 0); }
@@ -81,47 +80,32 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Overlay for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/70" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
 
-      <div className="relative z-30">
-        <Navbar />
-      </div>
+      <Navbar />
 
       <div className="flex-1" />
 
-      <div className="relative z-20 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16 lg:pb-20">
-        <p className="text-[13px] sm:text-sm text-white/90 tracking-wide mb-5 sm:mb-8">
-          Rolex India
-        </p>
-        <h1
-          className="font-medium text-white leading-[1.08] tracking-[-0.03em]"
-          style={{ fontSize: "clamp(1.75rem, 7vw, 4.2rem)" }}
-        >
-          We provide quality
-          <br className="hidden sm:block" />
-          <span className="sm:hidden"> </span>
-          Steel Products
-        </h1>
+      <div className="relative z-10 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-10 items-end">
+          <h1
+            className="font-black uppercase text-white leading-[0.92] tracking-tight"
+            style={{ fontSize: "clamp(2.75rem, 8.5vw, 6.5rem)" }}
+          >
+            We provide quality
+            <br />
+            Steel Products
+          </h1>
 
-        <div className="mt-8 sm:mt-12 flex flex-col items-start sm:flex-row sm:items-center gap-4 sm:gap-5">
-          <RollButton text="Contact Us" variant="orange" onClick={() => (window.location.hash = "#contact")} />
-
-          <div className="flex items-center gap-2.5 bg-white rounded-[4px] pl-3 pr-4 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)] transition-shadow duration-300 self-start sm:self-auto">
-            <ShieldCheck size={20} className="text-[#F26522] flex-shrink-0" />
-            <span className="text-[13px] sm:text-sm font-medium text-gray-900">
+          <div className="bg-[#F26522] rounded-lg p-6 sm:p-7 flex-shrink-0 w-full">
+            <p className="text-white text-[14px] sm:text-[15px] font-medium leading-snug mb-5">
               Trusted in steel since 1990
-            </span>
+            </p>
+            <RollButton text="Contact Us" variant="dark" onClick={() => (window.location.hash = "#contact")} />
           </div>
         </div>
 
-        {/* Slide indicator */}
-        <div
-          className="mt-8 sm:mt-10 flex items-center gap-3 sm:gap-4"
-          role="tablist"
-          aria-label="Hero background slides"
-        >
+        <div className="mt-8 sm:mt-10 flex items-center gap-2.5" role="tablist" aria-label="Hero background slides">
           {SLIDES.map((_, index) => {
             const isActive = index === activeIndex;
             return (
@@ -133,13 +117,11 @@ export default function Hero() {
                 aria-current={isActive ? "true" : undefined}
                 aria-label={`Show slide ${index + 1} of ${SLIDES.length}`}
                 onClick={() => handleIndicatorClick(index)}
-                className="py-1.5 group"
+                className="py-1"
               >
                 <span
-                  className={`block h-[2px] rounded-full transition-all duration-300 ${
-                    isActive
-                      ? "w-6 sm:w-8 bg-white"
-                      : "w-3 sm:w-4 bg-white/40 group-hover:bg-white/70"
+                  className={`block h-[3px] rounded-full transition-all duration-300 ${
+                    isActive ? "w-8 bg-[#F26522]" : "w-4 bg-white/40 hover:bg-white/70"
                   }`}
                 />
               </button>

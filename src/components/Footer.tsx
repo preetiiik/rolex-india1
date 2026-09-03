@@ -5,26 +5,26 @@ import logo from "../assets/logo.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white pt-14 sm:pt-16 lg:pt-20 pb-8">
+    <footer className="bg-[#F26522] text-white pt-14 sm:pt-16 lg:pt-20 pb-8">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 sm:pb-16 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 sm:pb-16 border-b border-white/20">
 
           {/* Logo & Address */}
           <div>
             <img
               src={logo}
               alt="Rolex India"
-              className="h-14 w-14 rounded-xl object-cover mb-5"
+              className="h-12 w-12 rounded-md object-cover mb-5"
             />
 
             <a
   href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
   target="_blank"
   rel="noopener noreferrer"
-  className="flex gap-2.5 text-[14px] text-white/70 visited:text-white/70 no-underline leading-6 max-w-[280px] hover:text-white transition-colors duration-300"
+  className="flex gap-2.5 text-[14px] text-white/85 visited:text-white/85 no-underline leading-6 max-w-[280px] hover:text-white transition-colors duration-300"
 >
   <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
-    <MapPin size={15} className="text-white/50" />
+    <MapPin size={15} className="text-white" />
   </span>
   <span>
     B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubli,
@@ -35,8 +35,8 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <p className="text-[13px] text-white/50 mb-4">
-              Navigation
+            <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-white/70 mb-4">
+              Company
             </p>
 
             <ul className="space-y-2.5">
@@ -44,7 +44,7 @@ export default function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[15px] text-white/90 hover:text-white transition-colors duration-300"
+                    className="text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300"
                   >
                     {l.label}
                   </a>
@@ -55,8 +55,8 @@ export default function Footer() {
 
           {/* Contact Details */}
           <div>
-            <p className="text-[13px] text-white/50 mb-4">
-              Contact Details
+            <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-white/70 mb-4">
+              Get In Touch
             </p>
 
             <ul className="space-y-3">
@@ -65,11 +65,11 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+919620664429"
-                  className="flex items-center gap-2.5 text-[15px] text-white/90 hover:text-white transition-colors duration-300"
+                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300"
                 >
                   <Phone
                     size={15}
-                    className="text-white/50"
+                    className="text-white/70"
                   />
                   +91 9620664429
                 </a>
@@ -81,11 +81,11 @@ export default function Footer() {
                   href="https://wa.me/919738347599"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-[15px] text-white/90 hover:text-white transition-colors duration-300"
+                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300"
                 >
                   <FaWhatsapp
                     size={17}
-                    className="text-white/50"
+                    className="text-white/70"
                   />
                   +91 9738347599
                 </a>
@@ -95,11 +95,11 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:rolexindiahbl@gmail.com"
-                  className="flex items-center gap-2.5 text-[15px] text-white/90 hover:text-white transition-colors duration-300 break-all"
+                  className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-gray-900 transition-colors duration-300 break-all"
                 >
                   <Mail
                     size={15}
-                    className="text-white/50 flex-shrink-0"
+                    className="text-white/70 flex-shrink-0"
                   />
                   rolexindiahbl@gmail.com
                 </a>
@@ -112,7 +112,7 @@ export default function Footer() {
         {/* Bottom Footer */}
         <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
-         <p className="text-[13px] text-white/50">
+         <p className="text-[13px] text-white/80">
   © 2025 ROLEX INDIA. All Rights Reserved.{" "}
   <span>
     {" "}
@@ -130,16 +130,16 @@ export default function Footer() {
           <div className="flex items-center gap-4 text-[13px]">
   <a
     href="/privacy-policy"
-    className="text-white/50 hover:text-white transition-colors"
+    className="text-white/80 hover:text-white transition-colors"
   >
     Privacy Policy
   </a>
 
-  <span className="text-white/20">|</span>
+  <span className="text-white/30">|</span>
 
   <a
     href="/terms-of-service"
-    className="text-white/50 hover:text-white transition-colors"
+    className="text-white/80 hover:text-white transition-colors"
   >
     Terms of Service
   </a>

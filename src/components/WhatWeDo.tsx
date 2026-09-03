@@ -96,272 +96,96 @@ export default function WhatWeDo() {
       {/* =========================================================
           WHAT WE DO SECTION
       ========================================================= */}
-      <section className="bg-[#F5F5F5] pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28 overflow-hidden">
-        <div className="max-w-[1440px] mx-auto">
+      <section className="relative overflow-hidden bg-white pt-16 sm:pt-20 lg:pt-28">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 mb-10 sm:mb-14">
+          <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#F26522] mb-4">
+            What We Do
+          </p>
+          <h2
+            className="font-black uppercase leading-[0.95] tracking-tight text-gray-900"
+            style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
+          >
+            What We Do
+          </h2>
+        </div>
 
-          {/* Section label */}
-          <div className="px-5 sm:px-8 lg:px-12 flex items-center gap-3 mb-6 sm:mb-8">
-            <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
-              2
-            </span>
+        {/* Full-bleed feature image with numbered overlay row */}
+        <div className="relative w-full h-[56vh] sm:h-[64vh] bg-gray-900 mb-4 sm:mb-6">
+          {whatWeDo.map((item, index) => (
+            <img
+              key={item.n}
+              src={item.image}
+              alt={item.text}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                activeIndex === index ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/10" />
 
-            <span className="text-xs sm:text-[13px] font-medium border border-gray-300 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-              What We Do
-            </span>
-          </div>
-
-          <div className="px-5 sm:px-8 lg:px-12">
-
-            {/* Main heading */}
-            <h2
-              className="font-medium leading-[1.12] tracking-[-0.02em] text-gray-900 mb-10 sm:mb-14 lg:mb-16"
-              style={{ fontSize: "clamp(1.5rem, 4vw, 3.2rem)" }}
-            >
-              What We Do
-            </h2>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-
-              {/* =================================================
-                  LEFT SIDE
-              ================================================= */}
-              <div>
-
-                <ul className="space-y-2 sm:space-y-3">
-                  {whatWeDo.map((item, index) => (
-                    <li key={item.n}>
-
-                      {/* Capability item */}
-                      <div
-                        onMouseEnter={() => {
-                          if (
-                            !window.matchMedia("(hover: hover)").matches
-                          ) {
-                            return;
-                          }
-
-                          /*
-                           * Immediately show the corresponding image
-                           * and pause the slideshow.
-                           */
-                          setActiveIndex(index);
-                          setHovered(item.n);
-                        }}
-                        onMouseLeave={() => {
-                          if (
-                            !window.matchMedia("(hover: hover)").matches
-                          ) {
-                            return;
-                          }
-
-                          /*
-                           * Resume automatic slideshow.
-                           */
-                          setHovered(null);
-                        }}
-                        onClick={() => {
-                          /*
-                           * On touch devices, clicking the item
-                           * selects its image.
-                           */
-                          if (
-                            window.matchMedia("(hover: hover)").matches
-                          ) {
-                            return;
-                          }
-
-                          setActiveIndex(index);
-
-                          setHovered((prev) =>
-                            prev === item.n ? null : item.n
-                          );
-                        }}
-                        className={`group flex gap-4 sm:gap-5 rounded-xl px-3 py-3 sm:px-4 sm:py-4 -mx-3 sm:-mx-4 transition-colors duration-300 hover:bg-white cursor-pointer lg:cursor-default ${
-                          hovered === item.n ? "bg-white" : ""
-                        }`}
-                      >
-
-                        {/* Number */}
-                        <span
-                          className={`text-2xl sm:text-3xl font-medium leading-none w-8 flex-shrink-0 transition-colors duration-300 ${
-                            hovered === item.n
-                              ? "text-[#F26522]"
-                              : "text-gray-300 group-hover:text-[#F26522]"
-                          }`}
-                        >
-                          {item.n}
-                        </span>
-
-                        {/* Text */}
-                        <p
-                          className={`text-[15px] sm:text-base leading-[1.6] font-medium text-gray-900 pt-0.5 transition-transform duration-300 ${
-                            hovered === item.n
-                              ? "translate-x-1"
-                              : "group-hover:translate-x-1"
-                          }`}
-                        >
-                          {item.text}
-                        </p>
-                      </div>
-
-                      {/* =================================================
-                          MOBILE / TABLET IMAGE
-                      ================================================= */}
-                      <div
-                        className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-                          hovered === item.n
-                            ? "max-h-[320px] opacity-100 mt-2 mb-1"
-                            : "max-h-0 opacity-0"
-                        }`}
-                      >
-                        <img
-                          src={item.image}
-                          alt={item.text}
-                          className="w-full aspect-[4/3] object-cover rounded-xl"
-                        />
-                      </div>
-
-                    </li>
-                  ))}
-                </ul>
-
-                {/* =================================================
-                    MOBILE / TABLET BUTTON
-                ================================================= */}
+          <div className="absolute inset-x-0 bottom-0 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-6 sm:py-10">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
+              {whatWeDo.map((item, index) => (
                 <button
+                  key={item.n}
                   type="button"
-                  onClick={openGallery}
-                  className="
-                    lg:hidden
-                    group
-                    mt-6
-                    w-fit
-                    inline-flex
-                    items-center
-                    gap-2.5
-                    rounded-full
-                    bg-[#F26522]
-                    text-white
-                    px-5
-                    py-2.5
-                    text-sm
-                    font-semibold
-                    shadow-sm
-                    transition-all
-                    duration-300
-                    hover:bg-[#d95416]
-                    hover:-translate-y-0.5
-                    hover:shadow-md
-                  "
+                  onMouseEnter={() => {
+                    if (!window.matchMedia("(hover: hover)").matches) return;
+                    setActiveIndex(index);
+                    setHovered(item.n);
+                  }}
+                  onMouseLeave={() => {
+                    if (!window.matchMedia("(hover: hover)").matches) return;
+                    setHovered(null);
+                  }}
+                  onClick={() => setActiveIndex(index)}
+                  className={`text-left border-t-2 pt-3 transition-colors duration-300 ${
+                    activeIndex === index ? "border-[#F26522]" : "border-white/25 hover:border-white/60"
+                  }`}
                 >
-                  <span>5 Core Capabilities</span>
-
                   <span
-                    className="
-                      flex
-                      items-center
-                      justify-center
-                      w-6
-                      h-6
-                      rounded-full
-                      bg-white/20
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-0.5
-                    "
+                    className={`block text-[22px] sm:text-3xl font-black transition-colors duration-300 ${
+                      activeIndex === index ? "text-[#F26522]" : "text-white/50"
+                    }`}
                   >
-                    ↗
+                    {String(item.n).padStart(2, "0")}
                   </span>
                 </button>
-
-              </div>
-
-              {/* =================================================
-                  RIGHT SIDE - DESKTOP
-              ================================================= */}
-              <div className="hidden lg:flex flex-col w-full gap-4">
-
-                {/* Image slideshow */}
-                <div className="relative w-full aspect-[900/600] sm:aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-900">
-
-                  {whatWeDo.map((item, index) => (
-                    <img
-                      key={item.n}
-                      src={item.image}
-                      alt={item.text}
-                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                        activeIndex === index
-                          ? "opacity-100"
-                          : "opacity-0"
-                      }`}
-                    />
-                  ))}
-
-                  {/* Slideshow indicators */}
-                  <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
-                    {whatWeDo.map((item, index) => (
-                      <span
-                        key={item.n}
-                        className={`rounded-full transition-all duration-500 ${
-                          activeIndex === index
-                            ? "w-8 h-1.5 bg-white"
-                            : "w-1.5 h-1.5 bg-white/50"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {/* =================================================
-                    DESKTOP BUTTON
-                ================================================= */}
-                <button
-                  type="button"
-                  onClick={openGallery}
-                  className="
-                    group
-                    self-start
-                    w-fit
-                    inline-flex
-                    items-center
-                    gap-3
-                    rounded-full
-                    bg-[#F26522]
-                    text-white
-                    px-6
-                    py-3
-                    text-sm
-                    font-semibold
-                    shadow-sm
-                    transition-all
-                    duration-300
-                    hover:bg-[#d95416]
-                    hover:-translate-y-0.5
-                    hover:shadow-md
-                  "
-                >
-                  <span>5 Core Capabilities</span>
-
-                  <span
-                    className="
-                      flex
-                      items-center
-                      justify-center
-                      w-6
-                      h-6
-                      rounded-full
-                      bg-white/20
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-0.5
-                    "
-                  >
-                    ↗
-                  </span>
-                </button>
-
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
+
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20 lg:pb-28">
+          <p className="text-[16px] sm:text-xl font-semibold text-gray-900 leading-snug mb-10 sm:mb-14 max-w-[820px]">
+            {whatWeDo[activeIndex].text}
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {whatWeDo.map((item) => (
+              <div key={item.n} className="bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
+                <img src={item.image} alt={item.text} className="w-full aspect-[4/3] object-cover" />
+                <div className="p-5 sm:p-6">
+                  <span className="text-[#F26522] font-black text-sm">{String(item.n).padStart(2, "0")}</span>
+                  <p className="text-[14px] sm:text-[15px] leading-[1.6] font-medium text-gray-700 mt-2">
+                    {item.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={openGallery}
+              className="group flex flex-col items-start justify-center gap-3 bg-[#F26522] rounded-lg p-6 text-left hover:bg-[#d95416] transition-colors duration-300"
+            >
+              <span className="flex items-center justify-center w-11 h-11 rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1">
+                ↗
+              </span>
+              <span className="text-white font-black uppercase text-lg leading-tight">
+                5 Core Capabilities
+              </span>
+            </button>
           </div>
         </div>
       </section>
