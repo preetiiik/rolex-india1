@@ -4,17 +4,104 @@ import { FaWhatsapp } from "react-icons/fa";
 import RollButton from "./RollButton";
 import contactBg from "../assets/what-we-do1.webp";
 
-const fields = [
-  { name: "entityName", label: "Entity Name", required: true },
-  { name: "contactPerson", label: "Contact Person", required: true },
-  { name: "email", label: "Email ID", required: true, type: "email" },
-  { name: "phone", label: "Phone No.", required: true, type: "tel" },
-  { name: "quantity", label: "Quantity Required", required: true },
-  { name: "material", label: "Material", required: true },
+type FieldConfig = {
+  name: string;
+  label: string;
+  required: boolean;
+  type?: string;
+  validate: (value: string) => string;
+};
+
+const NAME_PATTERN = /^[A-Za-z][A-Za-z\s.'-]*$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_PATTERN = /^\+?[0-9]{10,15}$/;
+
+const fields: FieldConfig[] = [
+  {
+    name: "entityName",
+    label: "Entity Name",
+    required: true,
+    validate: (v) => (v.trim().length < 2 ? "Enter a valid entity name" : ""),
+  },
+  {
+    name: "contactPerson",
+    label: "Contact Person",
+    required: true,
+    validate: (v) => (!NAME_PATTERN.test(v.trim()) ? "Name should only contain letters" : ""),
+  },
+  {
+    name: "email",
+    label: "Email ID",
+    required: true,
+    type: "email",
+    validate: (v) => (!EMAIL_PATTERN.test(v.trim()) ? "Enter a valid email address" : ""),
+  },
+  {
+    name: "phone",
+    label: "Phone No.",
+    required: true,
+    type: "tel",
+    validate: (v) => (!PHONE_PATTERN.test(v.trim()) ? "Enter a valid phone number (digits only)" : ""),
+  },
+  {
+    name: "quantity",
+    label: "Quantity Required",
+    required: true,
+    validate: (v) => (!/\d/.test(v) ? "Enter a valid quantity (numbers required)" : ""),
+  },
+  {
+    name: "material",
+    label: "Material",
+    required: true,
+    validate: (v) => (v.trim().length < 1 ? "Material is required" : ""),
+  },
 ];
+
+const emptyValues = Object.fromEntries(fields.map((f) => [f.name, ""]));
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [values, setValues] = useState<Record<string, string>>(emptyValues);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const handleChange = (name: string, value: string) => {
+    setValues((prev) => ({ ...prev, [name]: value }));
+    if (touched[name]) {
+      const field = fields.find((f) => f.name === name)!;
+      setErrors((prev) => ({ ...prev, [name]: value.trim() ? field.validate(value) : "" }));
+    }
+  };
+
+  const handleBlur = (name: string) => {
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const field = fields.find((f) => f.name === name)!;
+    const value = values[name];
+    setErrors((prev) => ({
+      ...prev,
+      [name]: !value.trim() ? "This field is required" : field.validate(value),
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const nextErrors: Record<string, string> = {};
+    fields.forEach((f) => {
+      const value = values[f.name];
+      nextErrors[f.name] = !value.trim() ? "This field is required" : f.validate(value);
+    });
+    setErrors(nextErrors);
+    setTouched(Object.fromEntries(fields.map((f) => [f.name, true])));
+
+    const hasErrors = Object.values(nextErrors).some(Boolean);
+    if (hasErrors) return;
+
+    setSubmitted(true);
+    setValues(emptyValues);
+    setErrors({});
+    setTouched({});
+  };
 
   return (
     <section id="contact" className="bg-white">
@@ -99,13 +186,7 @@ export default function Contact() {
 
         {/* Right: form panel */}
         <div className="px-5 sm:px-8 lg:px-14 py-16 sm:py-20 lg:py-28 flex items-center">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-            className="w-full max-w-[520px] mx-auto"
-          >
+          <form onSubmit={handleSubmit} noValidate className="w-full max-w-[520px] mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               {fields.map((f) => (
                 <label key={f.name} className="flex flex-col gap-2">
@@ -114,9 +195,16 @@ export default function Contact() {
                   </span>
                   <input
                     type={f.type ?? "text"}
-                    required={f.required}
-                    className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-[14px] text-gray-900 outline-none focus:border-[#F26522] transition-colors duration-300"
+                    value={values[f.name]}
+                    onChange={(e) => handleChange(f.name, e.target.value)}
+                    onBlur={() => handleBlur(f.name)}
+                    className={`w-full rounded-lg border bg-white px-4 py-3 text-[14px] text-gray-900 outline-none transition-colors duration-300 ${
+                      errors[f.name] ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-[#F26522]"
+                    }`}
                   />
+                  {errors[f.name] && (
+                    <span className="text-[12px] text-red-500">{errors[f.name]}</span>
+                  )}
                 </label>
               ))}
             </div>
