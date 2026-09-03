@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Clock, Menu, X } from "lucide-react";
 import { navLinks } from "../data/content";
 import RollButton from "./RollButton";
@@ -8,13 +9,24 @@ import logo from "../assets/logo.png";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const time = useLiveTime("Asia/Kolkata");
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+
+  const sectionHref = (hash: string) => (isHome ? hash : `/${hash}`);
+  const goToSection = (hash: string) => {
+    if (isHome) {
+      window.location.hash = hash;
+    } else {
+      window.location.href = `/${hash}`;
+    }
+  };
 
   return (
     <>
-      <div className="absolute top-0 left-0 right-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200">
+      <div className="fixed top-0 left-0 right-0 z-30 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200">
         <nav className="max-w-[1440px] mx-auto flex items-center px-5 sm:px-8 lg:px-12 py-3 sm:py-4">
           <div className="flex flex-1 items-center">
-            <a href="#home" className="flex items-center gap-2.5">
+            <a href={isHome ? "#home" : "/"} className="flex items-center gap-2.5">
               <img src={logo} alt="Rolex India" className="h-9 w-9 sm:h-10 sm:w-10 rounded-md object-cover" />
               <span className="hidden sm:block text-[15px] font-black uppercase tracking-tight text-gray-900">
                 Rolex India
@@ -26,7 +38,7 @@ export default function Navbar() {
                 .map((l) => (
                   <a
                     key={l.label}
-                    href={l.href}
+                    href={sectionHref(l.href)}
                     className="text-[12px] font-bold uppercase tracking-wide text-gray-700 hover:text-[#F26522] transition-colors duration-300"
                   >
                     {l.label}
@@ -36,7 +48,7 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center shrink-0">
-            <RollButton text="Get In Touch" size="md" variant="orange" onClick={() => (window.location.hash = "#contact")} />
+            <RollButton text="Get In Touch" size="md" variant="orange" onClick={() => goToSection("#contact")} />
           </div>
 
           <button
@@ -82,7 +94,7 @@ export default function Navbar() {
               .map((l) => (
                 <a
                   key={l.label}
-                  href={l.href}
+                  href={sectionHref(l.href)}
                   onClick={() => setOpen(false)}
                   className="text-[26px] font-black uppercase text-gray-900 py-1"
                 >
@@ -93,7 +105,10 @@ export default function Navbar() {
           <RollButton
             text="Enquiry"
             variant="orange"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              goToSection("#contact");
+            }}
             className="w-full justify-between"
           />
         </div>
