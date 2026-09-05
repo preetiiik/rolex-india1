@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Clock, Mail, Menu, Phone, X } from "lucide-react";
 import { navLinks } from "../data/content";
@@ -8,6 +8,7 @@ import logo from "../assets/logo.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const time = useLiveTime("Asia/Kolkata");
   const { pathname } = useLocation();
   const isHome = pathname === "/";
@@ -20,6 +21,40 @@ export default function Navbar() {
       window.location.href = `/${hash}`;
     }
   };
+
+  useEffect(() => {
+    if (!isHome) return;
+
+    const ids = Array.from(
+      new Set(
+        navLinks
+          .filter((l) => l.label !== "Enquiry")
+          .map((l) => l.href.replace("#", ""))
+      )
+    );
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length === 0) return;
+        const topMost = visible.reduce((a, b) =>
+          a.boundingClientRect.top < b.boundingClientRect.top ? a : b
+        );
+        setActiveSection(topMost.target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  const isActive = (hash: string) => isHome && activeSection === hash.replace("#", "");
 
   return (
     <>
@@ -58,7 +93,9 @@ export default function Navbar() {
                 <a
                   key={l.label}
                   href={sectionHref(l.href)}
-                  className="text-[13px] font-medium text-gray-700 hover:text-[#2F6F7E] transition-colors duration-300"
+                  className={`text-[13px] font-medium transition-colors duration-300 ${
+                    isActive(l.href) ? "text-[#2F6F7E] font-semibold" : "text-gray-700 hover:text-[#2F6F7E]"
+                  }`}
                 >
                   {l.label}
                 </a>
@@ -114,7 +151,9 @@ export default function Navbar() {
                   key={l.label}
                   href={sectionHref(l.href)}
                   onClick={() => setOpen(false)}
-                  className="text-[26px] font-black uppercase text-gray-900 py-1"
+                  className={`text-[26px] font-black uppercase py-1 ${
+                    isActive(l.href) ? "text-[#2F6F7E]" : "text-gray-900"
+                  }`}
                 >
                   {l.label}
                 </a>
