@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Layers, Cog, Factory } from "lucide-react";
 import heroBg from "../assets/hero-bg.webp";
 import heroBg1 from "../assets/hero-bg-1.jpg";
 import heroBg2 from "../assets/hero-bg-2.png";
@@ -18,26 +17,6 @@ const SLIDES = [
 
 const SLIDE_DURATION = 3000;
 
-// Titles are taken verbatim from the diversification list in About.tsx;
-// descriptions are taken verbatim from the whatWeDo entries in data/content.ts.
-const HERO_CARDS = [
-  {
-    icon: Layers,
-    title: "Bright Bars",
-    text: "We manufacture Bright Bars in various shapes and sizes.",
-  },
-  {
-    icon: Cog,
-    title: "Precision Machined Components such as Idler Shafts, Mixer Shafts, and Fan Shafts",
-    text: "Our machining facility specializes in producing idler shafts, fan shafts, and mixer shafts.",
-  },
-  {
-    icon: Factory,
-    title: "Furnace Tap Hole Drilling Equipment",
-    text: "We manufacture Furnace Tap Hole Drill equipment and currently supply to JSW Steel plants and AMNS in Hazira.",
-  },
-];
-
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -47,8 +26,12 @@ export default function Hero() {
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   const startAutoplay = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
     if (prefersReducedMotion) return;
+
     intervalRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % SLIDES.length);
     }, SLIDE_DURATION);
@@ -61,22 +44,37 @@ export default function Hero() {
 
   useEffect(() => {
     startAutoplay();
+
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <section id="home" className="relative min-h-dvh flex flex-col overflow-hidden bg-gray-900">
+    <section
+      id="home"
+      className="relative min-h-[100svh] w-full overflow-hidden bg-gray-900"
+    >
       <style>{`
         @keyframes heroKenBurns {
-          0% { transform: scale(1) translate(0, 0); }
-          100% { transform: scale(1.08) translate(-1.2%, -1%); }
+          0% {
+            transform: scale(1);
+          }
+
+          100% {
+            transform: scale(1.08);
+          }
         }
+
         .hero-slide-img {
           animation: heroKenBurns 20s ease-in-out infinite alternate;
+          will-change: transform;
         }
+
         @media (prefers-reduced-motion: reduce) {
           .hero-slide-img {
             animation: none !important;
@@ -86,89 +84,126 @@ export default function Hero() {
       `}</style>
 
       {/* Background carousel */}
-      <div className="absolute inset-0" aria-hidden="true">
+      <div
+        className="absolute inset-0 overflow-hidden"
+        aria-hidden="true"
+      >
         {SLIDES.map((slide, index) => (
           <img
             key={slide.src}
             src={slide.src}
             alt={slide.alt}
-            className={`hero-slide-img absolute inset-0 w-full h-full object-cover transition-opacity ease-in-out ${
-              index === activeIndex ? "opacity-100" : "opacity-0"
+            className={`hero-slide-img absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out ${
+              index === activeIndex
+                ? "opacity-100"
+                : "opacity-0"
             }`}
-            style={{ transitionDuration: "1000ms" }}
+            style={{
+              transitionDuration: "1000ms",
+            }}
             loading={index === 0 ? "eager" : "lazy"}
           />
         ))}
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/15" />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-black/75" />
 
+      {/* Extra bottom readability */}
+      <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+      {/* Navbar */}
       <Navbar />
 
-      {/* Remaining hero height is split 70/30: top is pure imagery, bottom holds the text content. */}
-      <div className="flex-1 flex flex-col">
-        <div className="flex-[7]" />
-        <div className="flex-[3] relative z-10 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-4 sm:pb-6">
-          <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.1em] text-white mb-4">
-            <span className="w-8 h-[2px] bg-[#4FA8B8]" />
-            Rolex India
+      {/* Hero Content */}
+      <div className="relative z-10 flex min-h-[100svh] items-end">
+        <div className="mx-auto w-full max-w-[1440px] px-5 pb-10 pt-32 sm:px-8 sm:pb-14 md:pb-16 lg:px-12 lg:pb-20">
+
+          {/* Eyebrow */}
+          <p className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white sm:text-[13px]">
+            <span className="h-[2px] w-8 shrink-0 bg-[#4FA8B8]" />
+            <span>Rolex India</span>
           </p>
+
+          {/* Heading */}
           <h1
-            className="font-bold text-white leading-[1.15] tracking-tight max-w-[720px]"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)" }}
+            className="
+              max-w-[850px]
+              font-bold
+              leading-[1.05]
+              tracking-[-0.025em]
+              text-white
+              text-[2.2rem]
+              sm:text-[3.2rem]
+              md:text-[3.8rem]
+              lg:text-[4.5rem]
+              xl:text-[5rem]
+            "
           >
-            We provide quality Steel Products
+            We provide quality
+            <br className="hidden sm:block" />
+            <span className="text-[#4FA8B8]">
+              {" "}Steel Products
+            </span>
           </h1>
-          <p className="text-white/70 text-[14px] sm:text-[15px] mt-4 mb-7">
+
+          {/* Subtitle */}
+          <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-white/75 sm:text-[15px] md:text-base">
             Trusted in steel since 1990
           </p>
 
-          <div className="mt-2 flex items-center gap-2.5" role="tablist" aria-label="Hero background slides">
+          {/* CTA */}
+          <div className="mt-6 sm:mt-7">
+            <RollButton
+              text="Contact Us"
+              variant="teal"
+              onClick={() =>
+                (window.location.hash = "#contact")
+              }
+            />
+          </div>
+
+          {/* Slide indicators */}
+          <div
+            className="mt-8 flex items-center gap-2.5 sm:mt-10"
+            role="tablist"
+            aria-label="Hero background slides"
+          >
             {SLIDES.map((_, index) => {
               const isActive = index === activeIndex;
+
               return (
                 <button
                   key={index}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
-                  aria-current={isActive ? "true" : undefined}
-                  aria-label={`Show slide ${index + 1} of ${SLIDES.length}`}
-                  onClick={() => handleIndicatorClick(index)}
-                  className="py-1"
+                  aria-current={
+                    isActive ? "true" : undefined
+                  }
+                  aria-label={`Show slide ${
+                    index + 1
+                  } of ${SLIDES.length}`}
+                  onClick={() =>
+                    handleIndicatorClick(index)
+                  }
+                  className="group py-2"
                 >
                   <span
-                    className={`block h-[3px]  transition-all duration-300 ${
-                      isActive ? "w-8 bg-white" : "w-4 bg-white/40 hover:bg-white/70"
-                    }`}
+                    className={`
+                      block h-[3px]
+                      transition-all duration-300
+                      ${
+                        isActive
+                          ? "w-9 bg-[#4FA8B8]"
+                          : "w-4 bg-white/40 group-hover:bg-[#4FA8B8]/70"
+                      }
+                    `}
                   />
                 </button>
               );
             })}
           </div>
-        </div>
-      </div>
-
-      <div className="relative z-10 bg-[#14282E]">
-        <div className="max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-          {HERO_CARDS.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="flex flex-col h-full border border-white/10 bg-white/[0.03] p-6">
-              <div className="flex items-start justify-between mb-4">
-                <h3 className="text-white font-semibold text-[16px] leading-snug max-w-[180px]">{title}</h3>
-                <span className="flex-shrink-0 w-9 h-9 flex items-center justify-center bg-[#4FA8B8]/15 text-[#4FA8B8]">
-                  <Icon size={18} />
-                </span>
-              </div>
-              <p className="text-white/60 text-[13px] leading-[1.6] mb-5">{text}</p>
-              <RollButton
-                text="Discover More"
-                variant="outline"
-                size="sm"
-                className="mt-auto self-start"
-                onClick={() => (window.location.hash = "#products")}
-              />
-            </div>
-          ))}
         </div>
       </div>
     </section>
