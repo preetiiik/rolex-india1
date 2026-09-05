@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import heroBg from "../assets/hero-bg.webp";
 import heroBg1 from "../assets/hero-bg-1.jpg";
 import heroBg2 from "../assets/hero-bg-2.png";
@@ -7,202 +6,83 @@ import heroBg4 from "../assets/hero-bg-4.jpg";
 import RollButton from "./RollButton";
 import Navbar from "./Navbar";
 
-const SLIDES = [
-  { src: heroBg, alt: "Rolex India steel manufacturing facility" },
-  { src: heroBg1, alt: "Rolex India steel production line" },
-  { src: heroBg2, alt: "Rolex India steel warehouse and inventory" },
-  { src: heroBg3, alt: "Rolex India steel quality inspection" },
-  { src: heroBg4, alt: "Rolex India steel finished products" },
-];
-
-const SLIDE_DURATION = 3000;
-
 export default function Hero() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-  const startAutoplay = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-
-    if (prefersReducedMotion) return;
-
-    intervalRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % SLIDES.length);
-    }, SLIDE_DURATION);
-  };
-
-  const handleIndicatorClick = (index: number) => {
-    setActiveIndex(index);
-    startAutoplay();
-  };
-
-  useEffect(() => {
-    startAutoplay();
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <section
-      id="home"
-      className="relative min-h-[100svh] w-full overflow-hidden bg-gray-900"
-    >
-      <style>{`
-        @keyframes heroKenBurns {
-          0% {
-            transform: scale(1);
-          }
-
-          100% {
-            transform: scale(1.08);
-          }
-        }
-
-        .hero-slide-img {
-          animation: heroKenBurns 20s ease-in-out infinite alternate;
-          will-change: transform;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hero-slide-img {
-            animation: none !important;
-            transform: none !important;
-          }
-        }
-      `}</style>
-
-      {/* Background carousel */}
+    <section id="home" className="relative min-h-dvh bg-[#0d1b1f] overflow-hidden">
       <div
-        className="absolute inset-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        {SLIDES.map((slide, index) => (
-          <img
-            key={slide.src}
-            src={slide.src}
-            alt={slide.alt}
-            className={`hero-slide-img absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out ${
-              index === activeIndex
-                ? "opacity-100"
-                : "opacity-0"
-            }`}
-            style={{
-              transitionDuration: "1000ms",
-            }}
-            loading={index === 0 ? "eager" : "lazy"}
-          />
-        ))}
-      </div>
+        className="absolute inset-0 opacity-40"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 15% 20%, rgba(79,168,184,0.25), transparent), radial-gradient(50% 40% at 85% 80%, rgba(47,111,126,0.3), transparent)",
+        }}
+      />
 
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-black/75" />
-
-      {/* Extra bottom readability */}
-      <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-      {/* Navbar */}
       <Navbar />
 
-      {/* Hero Content */}
-      <div className="relative z-10 flex min-h-[100svh] items-end">
-        <div className="mx-auto w-full max-w-[1440px] px-5 pb-10 pt-32 sm:px-8 sm:pb-14 md:pb-16 lg:px-12 lg:pb-20">
-
-          {/* Eyebrow */}
-          <p className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white sm:text-[13px]">
-            <span className="h-[2px] w-8 shrink-0 bg-[#4FA8B8]" />
-            <span>Rolex India</span>
-          </p>
-
-          {/* Heading */}
-          <h1
-            className="
-              max-w-[850px]
-              font-bold
-              leading-[1.05]
-              tracking-[-0.025em]
-              text-white
-              text-[2.2rem]
-              sm:text-[3.2rem]
-              md:text-[3.8rem]
-              lg:text-[4.5rem]
-              xl:text-[5rem]
-            "
-          >
-            We provide quality
-            <br className="hidden sm:block" />
-            <span className="text-[#4FA8B8]">
-              {" "}Steel Products
-            </span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-white/75 sm:text-[15px] md:text-base">
-            Trusted in steel since 1990
-          </p>
-
-          {/* CTA */}
-          <div className="mt-6 sm:mt-7">
-            <RollButton
-              text="Contact Us"
-              variant="teal"
-              onClick={() =>
-                (window.location.hash = "#contact")
-              }
-            />
+      <div className="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-32 pb-16 sm:pb-20 min-h-dvh flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[38%_62%] lg:grid-rows-[auto_auto] gap-10 lg:gap-x-10 lg:gap-y-6 w-full">
+          {/* Text content: eyebrow, heading, subtitle */}
+          <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
+            <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
+              <span className="w-8 h-[2px] bg-[#4FA8B8]" />
+              Rolex India
+            </p>
+            <h1
+              className="font-bold text-white leading-[1.05] tracking-tight max-w-[520px]"
+              style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
+            >
+              We provide quality Steel Products
+            </h1>
+            <p className="text-white/60 text-[15px] sm:text-base leading-relaxed mt-6 max-w-[440px]">
+              Trusted in steel since 1990.
+            </p>
           </div>
 
-          {/* Slide indicators */}
-          <div
-            className="mt-8 flex items-center gap-2.5 sm:mt-10"
-            role="tablist"
-            aria-label="Hero background slides"
-          >
-            {SLIDES.map((_, index) => {
-              const isActive = index === activeIndex;
+          {/* Photo collage: right column on desktop, spans both rows to stay vertically centered */}
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 flex justify-center lg:justify-end items-center gap-3 sm:gap-4">
+            <div className="flex flex-col gap-3 sm:gap-4">
+              <img
+                src={heroBg}
+                alt="Rolex India steel manufacturing facility"
+                className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
+              />
+              <img
+                src={heroBg1}
+                alt="Rolex India steel production line"
+                className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
+              />
+            </div>
+            <div className="flex flex-col gap-3 sm:gap-4 mt-10 sm:mt-14">
+              <img
+                src={heroBg2}
+                alt="Rolex India steel warehouse and inventory"
+                className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
+              />
+              <img
+                src={heroBg3}
+                alt="Rolex India steel quality inspection"
+                className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
+              />
+            </div>
+            <div className="hidden sm:flex items-center">
+              <img
+                src={heroBg4}
+                alt="Rolex India steel finished products"
+                className="w-44 sm:w-56 lg:w-64 aspect-[3/5] object-cover"
+              />
+            </div>
+          </div>
 
-              return (
-                <button
-                  key={index}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-current={
-                    isActive ? "true" : undefined
-                  }
-                  aria-label={`Show slide ${
-                    index + 1
-                  } of ${SLIDES.length}`}
-                  onClick={() =>
-                    handleIndicatorClick(index)
-                  }
-                  className="group py-2"
-                >
-                  <span
-                    className={`
-                      block h-[3px]
-                      transition-all duration-300
-                      ${
-                        isActive
-                          ? "w-9 bg-[#4FA8B8]"
-                          : "w-4 bg-white/40 group-hover:bg-[#4FA8B8]/70"
-                      }
-                    `}
-                  />
-                </button>
-              );
-            })}
+          {/* CTA row: after photos on mobile, back in the left column on desktop */}
+          <div className="lg:col-start-1 lg:row-start-2 flex items-center gap-6 sm:gap-8">
+            <RollButton text="Contact Us" variant="teal" onClick={() => (window.location.hash = "#contact")} />
+            <a
+              href="#products"
+              className="text-white text-[14px] font-semibold flex items-center gap-2 hover:text-[#4FA8B8] transition-colors duration-300"
+            >
+              View Products
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </div>
