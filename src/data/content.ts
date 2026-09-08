@@ -4,7 +4,7 @@ import fp3 from "../assets/products/fp-3.webp";
 import fp4 from "../assets/products/fp-4.webp";
 import fp5 from "../assets/products/fp-5.png";
 import fp6 from "../assets/products/fp-6.webp";
-import fp7 from "../assets/products/fp-7.png";
+// import fp7 from "../assets/products/fp-7.png";
 import fp8 from "../assets/products/fp-8.webp";
 import fp9 from "../assets/products/fp-9.png";
 import fp10 from "../assets/products/fp-10.png";
@@ -17,9 +17,9 @@ import gallery3 from "../assets/gallery/gallery-3.png";
 import gallery4 from "../assets/gallery/gallery-4.png";
 
 import brightBarsImg from "../assets/what-we-do/bright-bars.webp";
-import machinedShaftsImg from "../assets/what-we-do/machined-shafts.webp";
-import sheetMetalImg from "../assets/what-we-do/sheet-metal.webp";
-import drillEquipmentImg from "../assets/what-we-do/drill-equipment.webp";
+import machinedShaftsImg from "../assets/what-we-do/machined-shafts.png";
+// import sheetMetalImg from "../assets/what-we-do/sheet-metal.webp";
+// import drillEquipmentImg from "../assets/what-we-do/drill-equipment.webp";
 import steelMaterialsImg from "../assets/what-we-do/steel-materials.webp";
 
 export const navLinks = [
@@ -39,19 +39,19 @@ export const whatWeDo = [
   },
   {
     n: 2,
-    text: "Our machining facility specializes in producing idler shafts, fan shafts, and mixer shafts.",
+    text: " We also have a machining facility to cater to any machining needs.",
     image: machinedShaftsImg,
   },
   {
     n: 3,
     text: "We produce sheet metal components such as electrical modular boxes and idler bearing housing.",
-    image: sheetMetalImg,
+    image: fp6,
   },
-  {
-    n: 4,
-    text: "We manufacture Furnace Tap Hole Drill equipment and currently supply to JSW Steel plants and AMNS in Hazira.",
-    image: drillEquipmentImg,
-  },
+  // {
+  //   n: 4,
+  //   text: "We manufacture Furnace Tap Hole Drill equipment and currently supply to JSW Steel plants and AMNS in Hazira.",
+  //   image: drillEquipmentImg,
+  // },
   {
     n: 5,
     text: "We offer prime quality alloy steel, non-alloy steel, mild steel, carbon steel, stainless steel, free cutting steel, and tool and die steel, all available in various shapes and sizes.",
@@ -96,12 +96,12 @@ export const products = [
       "We manufacture Bearing Housings for conveyors in steel rolling mills and other raw material transfer applications, ensuring durability and precision.",
     image: fp6,
   },
-  {
-    title: "Electrical Modular Boxes",
-    description:
-      "We manufacture Electrical Modular Boxes and Concealed Metal Boxes in all standard sizes, ensuring durability and precision for electrical installations.",
-    image: fp7,
-  },
+  // {
+  //   title: "Electrical Modular Boxes",
+  //   description:
+  //     "We manufacture Electrical Modular Boxes and Concealed Metal Boxes in all standard sizes, ensuring durability and precision for electrical installations.",
+  //   image: fp7,
+  // },
   {
     title: "Drill Bit",
     description:

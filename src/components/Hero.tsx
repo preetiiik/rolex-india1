@@ -2,7 +2,7 @@ import heroBg from "../assets/hero-bg.webp";
 import heroBg1 from "../assets/hero-bg-1.webp";
 import heroBg2 from "../assets/hero-bg-2.webp";
 import heroBg3 from "../assets/hero-bg-3.webp";
-import heroBg4 from "../assets/hero-bg-4.webp";
+import heroBg4 from "../assets/hero-bg-4.jpg";
 import RollButton from "./RollButton";
 import Navbar from "./Navbar";
 
