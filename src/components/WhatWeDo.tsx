@@ -53,8 +53,8 @@ export default function WhatWeDo() {
 
   return (
     <section className="relative overflow-hidden bg-white">
-      {/* Full-bleed feature image */}
-      <div className="relative w-full h-[40vh] sm:h-[64vh] bg-gray-900">
+      {/* Desktop/tablet: full-bleed feature image with floating overlay card (unchanged from original) */}
+      <div className="hidden sm:block relative w-full h-[64vh] bg-gray-900">
         {whatWeDo.map((item, index) => (
           <img
             key={item.n}
@@ -67,8 +67,7 @@ export default function WhatWeDo() {
         ))}
         <div className="absolute inset-0 bg-black/10" />
 
-        {/* Desktop-only: card overlaid on the image (unchanged from original) */}
-        <div className="hidden sm:flex absolute inset-0 max-w-[1440px] mx-auto px-8 lg:px-12 items-center justify-end">
+        <div className="flex absolute inset-0 max-w-[1440px] mx-auto px-8 lg:px-12 items-center justify-end">
           <div className="bg-white shadow-2xl p-8 w-full max-w-[420px]">
             <p className="text-lg font-bold text-gray-900 leading-snug">
               {whatWeDo[activeIndex].text}
@@ -79,13 +78,27 @@ export default function WhatWeDo() {
         </div>
       </div>
 
-      {/* Mobile-only: card sits below the image, in normal document flow */}
-      <div className="sm:hidden bg-white/20 backdrop-blur-md border border-white/30 shadow-2xl p-4 mx-5 -mt-1 relative z-10">
-        <p className="text-[12px] font-bold text-gray-900 leading-snug">
-          {whatWeDo[activeIndex].text}
-        </p>
-        <span className="block w-10 h-[3px] bg-[#2F6F7E] mt-4 mb-4" />
-        <Dots />
+      {/* Mobile-only: single unified product card (image + text together) */}
+      <div className="sm:hidden mx-5 mt-5 bg-white shadow-xl overflow-hidden">
+        <div className="relative w-full aspect-[4/3] bg-gray-900">
+          {whatWeDo.map((item, index) => (
+            <img
+              key={item.n}
+              src={item.image}
+              alt={item.text}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                activeIndex === index ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </div>
+        <div className="p-4">
+          <p className="text-[12px] font-bold text-gray-900 leading-snug">
+            {whatWeDo[activeIndex].text}
+          </p>
+          <span className="block w-10 h-[3px] bg-[#2F6F7E] mt-4 mb-4" />
+          <Dots />
+        </div>
       </div>
 
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-28">
