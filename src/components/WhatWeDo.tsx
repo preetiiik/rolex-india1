@@ -21,10 +21,40 @@ export default function WhatWeDo() {
     return () => clearInterval(interval);
   }, [hovered]);
 
+  // Shared dot-indicator row (used by both the desktop overlay card and the mobile below-image card)
+  const Dots = () => (
+    <div className="flex items-center gap-2.5">
+      {whatWeDo.map((item, index) => (
+        <button
+          key={item.n}
+          type="button"
+          aria-label={`Show capability ${item.n}`}
+          onMouseEnter={() => {
+            if (!window.matchMedia("(hover: hover)").matches) return;
+            setActiveIndex(index);
+            setHovered(item.n);
+          }}
+          onMouseLeave={() => {
+            if (!window.matchMedia("(hover: hover)").matches) return;
+            setHovered(null);
+          }}
+          onClick={() => setActiveIndex(index)}
+          className="py-1"
+        >
+          <span
+            className={`block h-[3px] transition-all duration-300 ${
+              activeIndex === index ? "w-7 bg-[#2F6F7E]" : "w-3 bg-gray-300 hover:bg-gray-400"
+            }`}
+          />
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <section className="relative overflow-hidden bg-white">
-      {/* Full-bleed feature image with floating info card */}
-      <div className="relative w-full h-[56vh] sm:h-[64vh] bg-gray-900">
+      {/* Full-bleed feature image */}
+      <div className="relative w-full h-[40vh] sm:h-[64vh] bg-gray-900">
         {whatWeDo.map((item, index) => (
           <img
             key={item.n}
@@ -37,40 +67,25 @@ export default function WhatWeDo() {
         ))}
         <div className="absolute inset-0 bg-black/10" />
 
-        <div className="absolute inset-0 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 flex items-end sm:items-center justify-center sm:justify-end pb-6 sm:pb-0">
-          <div className="bg-white shadow-2xl p-6 sm:p-8 w-[90%] sm:w-full max-w-[420px]">
-            <p className="text-[16px] sm:text-lg font-semibold text-gray-900 leading-snug">
+        {/* Desktop-only: card overlaid on the image (unchanged from original) */}
+        <div className="hidden sm:flex absolute inset-0 max-w-[1440px] mx-auto px-8 lg:px-12 items-center justify-end">
+          <div className="bg-white shadow-2xl p-8 w-full max-w-[420px]">
+            <p className="text-lg font-bold text-gray-900 leading-snug">
               {whatWeDo[activeIndex].text}
             </p>
             <span className="block w-10 h-[3px] bg-[#2F6F7E] mt-4 mb-4" />
-            <div className="flex items-center gap-2.5">
-              {whatWeDo.map((item, index) => (
-                <button
-                  key={item.n}
-                  type="button"
-                  aria-label={`Show capability ${item.n}`}
-                  onMouseEnter={() => {
-                    if (!window.matchMedia("(hover: hover)").matches) return;
-                    setActiveIndex(index);
-                    setHovered(item.n);
-                  }}
-                  onMouseLeave={() => {
-                    if (!window.matchMedia("(hover: hover)").matches) return;
-                    setHovered(null);
-                  }}
-                  onClick={() => setActiveIndex(index)}
-                  className="py-1"
-                >
-                  <span
-                    className={`block h-[3px] transition-all duration-300 ${
-                      activeIndex === index ? "w-7 bg-[#2F6F7E]" : "w-3 bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
+            <Dots />
           </div>
         </div>
+      </div>
+
+      {/* Mobile-only: card sits below the image, in normal document flow */}
+      <div className="sm:hidden bg-white/20 backdrop-blur-md border border-white/30 shadow-2xl p-4 mx-5 -mt-1 relative z-10">
+        <p className="text-[12px] font-bold text-gray-900 leading-snug">
+          {whatWeDo[activeIndex].text}
+        </p>
+        <span className="block w-10 h-[3px] bg-[#2F6F7E] mt-4 mb-4" />
+        <Dots />
       </div>
 
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-28">
