@@ -20,7 +20,7 @@ export default function Hero() {
       <Navbar />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-32 pb-16 sm:pb-20 min-h-dvh flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-[38%_62%] lg:grid-rows-[auto_auto] gap-10 lg:gap-x-10 lg:gap-y-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[38fr_62fr] lg:grid-rows-[auto_auto] gap-10 lg:gap-x-10 lg:gap-y-6 w-full">
           {/* Text content: eyebrow, heading, subtitle */}
           <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
             <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
