@@ -112,7 +112,7 @@ export default function WhatWeDo() {
           <span className="inline-block w-14 h-[3px] bg-[#2F6F7E] mt-5" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {whatWeDo.map((item) => (
             <div key={item.n} className="bg-[#EAF1F1] overflow-hidden">
               <img src={item.image} alt={item.text} className="w-full aspect-[4/3] object-cover" />
