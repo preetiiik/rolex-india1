@@ -37,8 +37,8 @@ export default function WhatWeDo() {
         ))}
         <div className="absolute inset-0 bg-black/10" />
 
-        <div className="absolute inset-0 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-end">
-          <div className="bg-white shadow-2xl p-6 sm:p-8 w-full max-w-[420px]">
+        <div className="absolute inset-0 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 flex items-end sm:items-center justify-center sm:justify-end pb-6 sm:pb-0">
+          <div className="bg-white shadow-2xl p-6 sm:p-8 w-[90%] sm:w-full max-w-[420px]">
             <p className="text-[16px] sm:text-lg font-semibold text-gray-900 leading-snug">
               {whatWeDo[activeIndex].text}
             </p>
