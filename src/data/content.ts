@@ -1,9 +1,9 @@
 import fp1 from "../assets/products/fp-1.png";
 import fp2 from "../assets/products/fp-2.png";
-import fp3 from "../assets/products/fp-3.webp";
-import fp4 from "../assets/products/fp-4.webp";
+import fp3 from "../assets/products/fp-3.png";
+import fp4 from "../assets/products/fp-4.png";
 import fp5 from "../assets/products/fp-5.png";
-import fp6 from "../assets/products/fp-6.webp";
+import fp6 from "../assets/products/fp-6.png";
 // import fp7 from "../assets/products/fp-7.png";
 import fp8 from "../assets/products/fp-8.webp";
 import fp9 from "../assets/products/fp-9.png";

@@ -1,5 +1,5 @@
 import aboutImg from "../assets/about-us.webp";
-import barsBundleImg from "../assets/what-we-do.webp";
+import barsBundleImg from "../assets/what-we-do.png";
 
 const diversification = [
   "Furnace Tap Hole Drilling Equipment",
