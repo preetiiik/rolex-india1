@@ -5,6 +5,7 @@ import heroBg3 from "../assets/hero-bg-3.webp";
 import heroBg4 from "../assets/hero-bg-4.jpg";
 import RollButton from "./RollButton";
 import Navbar from "./Navbar";
+import Reveal from "./Reveal";
 
 export default function Hero() {
   return (
@@ -22,7 +23,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-32 pb-16 sm:pb-20 min-h-dvh flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-[38fr_62fr] lg:grid-rows-[auto_auto] gap-10 lg:gap-x-10 lg:gap-y-6 w-full">
           {/* Text content: eyebrow, heading, subtitle */}
-          <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
+          <Reveal className="lg:col-start-1 lg:row-start-1 lg:self-end">
             <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
               <span className="w-8 h-[2px] bg-[#4FA8B8]" />
               Rolex India
@@ -36,45 +37,56 @@ export default function Hero() {
             <p className="text-white/60 text-[15px] sm:text-base leading-relaxed mt-6 max-w-[440px]">
               Trusted in steel since 1990.
             </p>
-          </div>
+          </Reveal>
 
-          {/* Photo collage: right column on desktop, spans both rows to stay vertically centered */}
+          {/* Photo collage: right column on desktop, spans both rows to stay vertically centered.
+              Each photo reveals individually, left-to-right, top-to-bottom. */}
           <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 flex justify-center lg:justify-end items-center gap-3 sm:gap-4">
             <div className="flex flex-col gap-3 sm:gap-4">
-              <img
-                src={heroBg}
-                alt="Rolex India steel manufacturing facility"
-                className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
-              />
-              <img
-                src={heroBg1}
-                alt="Rolex India steel production line"
-                className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
-              />
+              <Reveal delay={150}>
+                <img
+                  src={heroBg}
+                  alt="Rolex India steel manufacturing facility"
+                  className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
+                />
+              </Reveal>
+              <Reveal delay={230}>
+                <img
+                  src={heroBg1}
+                  alt="Rolex India steel production line"
+                  className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
+                />
+              </Reveal>
             </div>
             <div className="flex flex-col gap-3 sm:gap-4 mt-10 sm:mt-14">
-              <img
-                src={heroBg2}
-                alt="Rolex India steel warehouse and inventory"
-                className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
-              />
-              <img
-                src={heroBg3}
-                alt="Rolex India steel quality inspection"
-                className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
-              />
+              <Reveal delay={310}>
+                <img
+                  src={heroBg2}
+                  alt="Rolex India steel warehouse and inventory"
+                  className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
+                />
+              </Reveal>
+              <Reveal delay={390}>
+                <img
+                  src={heroBg3}
+                  alt="Rolex India steel quality inspection"
+                  className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
+                />
+              </Reveal>
             </div>
             <div className="hidden sm:flex items-center">
-              <img
-                src={heroBg4}
-                alt="Rolex India steel finished products"
-                className="w-44 sm:w-56 lg:w-64 aspect-[3/5] object-cover"
-              />
+              <Reveal delay={470}>
+                <img
+                  src={heroBg4}
+                  alt="Rolex India steel finished products"
+                  className="w-44 sm:w-56 lg:w-64 aspect-[3/5] object-cover"
+                />
+              </Reveal>
             </div>
           </div>
 
           {/* CTA row: after photos on mobile, back in the left column on desktop */}
-          <div className="lg:col-start-1 lg:row-start-2 flex items-center gap-6 sm:gap-8">
+          <Reveal delay={620} className="lg:col-start-1 lg:row-start-2 flex items-center gap-6 sm:gap-8">
             <RollButton text="Contact Us" variant="teal" onClick={() => (window.location.hash = "#contact")} />
             <a
               href="#products"
@@ -83,7 +95,7 @@ export default function Hero() {
               View Products
               <span aria-hidden="true">→</span>
             </a>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

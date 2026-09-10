@@ -27,3 +27,69 @@ h1, h2, h3 {
   }
 }
 
+/* Scroll-reveal: slide up + fade in as elements enter the viewport */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade-only variant: safe to use on ancestors of position:sticky elements,
+   since (unlike transform) opacity doesn't create a new containing block. */
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.7s ease-out;
+}
+
+.reveal-fade.is-visible {
+  opacity: 1;
+}
+
+/* One-shot entrance animations for modal/lightbox overlays */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-fade {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  .animate-fade-in,
+  .animate-scale-in {
+    animation: none;
+  }
+}

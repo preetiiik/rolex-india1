@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import RollButton from "./RollButton";
+import Reveal from "./Reveal";
 
 type FieldConfig = {
   name: string;
@@ -105,7 +106,7 @@ export default function Contact() {
   return (
     <section id="contact" className="bg-[#EAF1F1]">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20">
-        <div className="text-center mb-10 sm:mb-14 lg:mb-16">
+        <Reveal className="text-center mb-10 sm:mb-14 lg:mb-16">
           <h2
             className="font-bold leading-[1.05] tracking-tight text-gray-900"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
@@ -113,11 +114,11 @@ export default function Contact() {
             Contact
           </h2>
           <span className="inline-block w-14 h-[3px] bg-[#2F6F7E] mt-5" />
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
           {/* Left: info */}
-          <div className="space-y-5">
+          <Reveal className="space-y-5">
             <a
               href="tel:+919620664429"
               className="flex items-center gap-3 text-[14px] sm:text-[15px] font-medium text-gray-700 hover:text-[#2F6F7E] transition-colors duration-300"
@@ -153,9 +154,10 @@ export default function Contact() {
                 Karnataka 580030, India
               </span>
             </a>
-          </div>
+          </Reveal>
 
           {/* Right: form */}
+          <Reveal delay={120} className="w-full">
           <form onSubmit={handleSubmit} noValidate className="w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               {fields.map((f) => (
@@ -189,6 +191,7 @@ export default function Contact() {
               </p>
             )}
           </form>
+          </Reveal>
         </div>
       </div>
 

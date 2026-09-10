@@ -1,5 +1,24 @@
 import { useEffect, useState } from "react";
 import { whatWeDo } from "../data/content";
+import Reveal from "./Reveal";
+import { useReveal } from "../hooks/UseReveal";
+
+function WhatWeDoCard({ item, index }: { item: (typeof whatWeDo)[number]; index: number }) {
+  const { ref, visible } = useReveal<HTMLDivElement>();
+
+  return (
+    <div
+      ref={ref}
+      className={`reveal ${visible ? "is-visible" : ""} bg-[#EAF1F1] overflow-hidden`}
+      style={{ transitionDelay: `${(index % 2) * 100}ms` }}
+    >
+      <img src={item.image} alt={item.text} className="w-full aspect-[4/3] object-cover" />
+      <div className="p-5 sm:p-6">
+        <p className="text-[14px] sm:text-[15px] leading-[1.6] font-medium text-gray-700">{item.text}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function WhatWeDo() {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -102,7 +121,7 @@ export default function WhatWeDo() {
       </div>
 
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-28">
-        <div className="text-center mb-10 sm:mb-14">
+        <Reveal className="text-center mb-10 sm:mb-14">
           <h2
             className="font-bold leading-[1.05] tracking-tight text-gray-900"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
@@ -110,18 +129,11 @@ export default function WhatWeDo() {
             What We Do
           </h2>
           <span className="inline-block w-14 h-[3px] bg-[#2F6F7E] mt-5" />
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-          {whatWeDo.map((item) => (
-            <div key={item.n} className="bg-[#EAF1F1] overflow-hidden">
-              <img src={item.image} alt={item.text} className="w-full aspect-[4/3] object-cover" />
-              <div className="p-5 sm:p-6">
-                <p className="text-[14px] sm:text-[15px] leading-[1.6] font-medium text-gray-700">
-                  {item.text}
-                </p>
-              </div>
-            </div>
+          {whatWeDo.map((item, index) => (
+            <WhatWeDoCard key={item.n} item={item} index={index} />
           ))}
         </div>
       </div>

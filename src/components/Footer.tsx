@@ -2,6 +2,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { footerNav } from "../data/content";
 import logo from "../assets/logo.png";
+import Reveal from "./Reveal";
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 sm:pb-16 border-b border-white/10">
 
           {/* Logo & Address */}
-          <div>
+          <Reveal delay={0}>
             <img
               src={logo}
               alt="Rolex India"
@@ -31,10 +32,10 @@ export default function Footer() {
     Karnataka 580030, India
   </span>
 </a>
-          </div>
+          </Reveal>
 
           {/* Navigation */}
-          <div>
+          <Reveal delay={100}>
             <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-white/70 mb-4">
               Company
             </p>
@@ -51,10 +52,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Contact Details */}
-          <div>
+          <Reveal delay={200}>
             <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-white/70 mb-4">
               Get In Touch
             </p>
@@ -106,11 +107,11 @@ export default function Footer() {
               </li>
 
             </ul>
-          </div>
+          </Reveal>
         </div>
 
         {/* Bottom Footer */}
-        <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <Reveal delay={280} className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
          <p className="text-[13px] text-white/80">
   © 2025 ROLEX INDIA. All Rights Reserved.{" "}
@@ -145,7 +146,7 @@ export default function Footer() {
   </a>
 </div>
 
-        </div>
+        </Reveal>
       </div>
     </footer>
   );

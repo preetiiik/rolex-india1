@@ -1,4 +1,5 @@
 import valuesBg from "../assets/values-bg.webp";
+import Reveal from "./Reveal";
 
 export default function Values() {
   return (
@@ -8,7 +9,7 @@ export default function Values() {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-[#14282E]/90 via-[#14282E]/85 to-[#14282E]/95" />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center text-center">
+      <Reveal className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center text-center">
         <h2
           className="font-bold leading-[1.05] tracking-tight text-white px-5"
           style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
@@ -25,7 +26,7 @@ export default function Values() {
           dynamic industry. With integrity at our core, we remain committed to delivering
           excellence in everything we do.
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }

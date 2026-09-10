@@ -1,5 +1,6 @@
 import aboutImg from "../assets/about-us.webp";
 import barsBundleImg from "../assets/what-we-do.png";
+import Reveal from "./Reveal";
 
 const diversification = [
   "Furnace Tap Hole Drilling Equipment",
@@ -16,7 +17,7 @@ export default function About() {
         style={{ backgroundImage: `url(${aboutImg})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#14282E]/85 via-[#14282E]/50 to-[#14282E]/30" />
-        <div className="relative z-10 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-10 sm:pb-14">
+        <Reveal className="relative z-10 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-10 sm:pb-14">
           <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#4FA8B8] mb-4">
             Introducing Rolex India
           </p>
@@ -27,21 +28,23 @@ export default function About() {
             About Us
           </h2>
           <span className="block w-14 h-[3px] bg-[#4FA8B8] mt-5" />
-        </div>
+        </Reveal>
       </div>
 
       {/* Content row */}
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20 lg:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-[32%_1fr] gap-10 lg:gap-14">
-          <div>
+          {/* Fade-only: this column contains a lg:sticky image, and a transform on
+              an ancestor would break sticky positioning, so no slide-up here. */}
+          <Reveal variant="fade">
             <img
               src={barsBundleImg}
               alt="Bundle of finished steel bars"
               className="w-full aspect-[4/5] object-cover  lg:sticky lg:top-24"
             />
-          </div>
+          </Reveal>
 
-          <div className="text-gray-900">
+          <Reveal variant="up" className="text-gray-900">
             <p className="text-[17px] sm:text-xl leading-[1.6] font-semibold mb-8 max-w-[720px]">
               Rolex India has been a trusted name in the steel industry since its inception in
               1990. What began as a trading company specializing in high-quality steel bars has
@@ -89,7 +92,7 @@ export default function About() {
             <p className="text-[18px] sm:text-xl leading-[1.6] font-bold text-[#2F6F7E]">
               Let's build the future together!
             </p>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

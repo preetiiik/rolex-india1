@@ -24,8 +24,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative bg-white   w-full max-w-lg overflow-hidden max-h-[calc(100svh-2rem)] sm:max-h-[90vh] flex flex-col">
+      <div className="absolute inset-0 bg-black/60 animate-fade-in" onClick={onClose} />
+      <div className="relative bg-white   w-full max-w-lg overflow-hidden max-h-[calc(100svh-2rem)] sm:max-h-[90vh] flex flex-col animate-scale-in">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-9 h-9  bg-white/90 text-gray-900 flex items-center justify-center shadow-sm"

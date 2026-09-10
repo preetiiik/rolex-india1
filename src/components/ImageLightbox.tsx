@@ -30,7 +30,7 @@ export default function ImageLightbox({ images, index, onClose, onNavigate }: Im
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-8">
-      <div className="absolute inset-0 bg-black/85" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/85 animate-fade-in" onClick={onClose} />
 
       <button
         onClick={onClose}
@@ -60,9 +60,10 @@ export default function ImageLightbox({ images, index, onClose, onNavigate }: Im
       )}
 
       <img
+        key={index}
         src={images[index]}
         alt={`Gallery image ${index + 1}`}
-        className="relative z-[5] max-w-full max-h-[calc(100svh-2rem)] sm:max-h-[calc(100vh-4rem)] object-contain  "
+        className="relative z-[5] max-w-full max-h-[calc(100svh-2rem)] sm:max-h-[calc(100vh-4rem)] object-contain animate-scale-in"
       />
     </div>
   );
