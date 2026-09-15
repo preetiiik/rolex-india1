@@ -4,7 +4,7 @@ import fp3 from "../assets/products/fp-3.webp";
 import fp4 from "../assets/products/fp-4.webp";
 import fp5 from "../assets/products/fp-5.webp";
 import fp6 from "../assets/products/fp-6.webp";
-import fp7 from "../assets/products/fp-7.webp";
+// import fp7 from "../assets/products/fp-7.webp";
 import fp8 from "../assets/products/fp-8.webp";
 import fp9 from "../assets/products/fp-9.webp";
 import fp10 from "../assets/products/fp-10.webp";
