@@ -85,12 +85,12 @@ export const products = [
       "We manufacture Bearing Housings for conveyors in steel rolling mills and other raw material transfer applications, ensuring durability and precision.",
     image: fp6,
   },
-  {
-    title: "Electrical Modular Boxes",
-    description:
-      "We manufacture Electrical Modular Boxes and Concealed Metal Boxes in all standard sizes, ensuring durability and precision for electrical installations.",
-    image: fp7,
-  },
+  // {
+  //   title: "Electrical Modular Boxes",
+  //   description:
+  //     "We manufacture Electrical Modular Boxes and Concealed Metal Boxes in all standard sizes, ensuring durability and precision for electrical installations.",
+  //   image: fp7,
+  // },
   {
     title: "Drill Bit",
     description:

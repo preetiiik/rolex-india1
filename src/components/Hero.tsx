@@ -24,7 +24,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-[38fr_62fr] lg:grid-rows-[auto_auto] gap-10 lg:gap-x-10 lg:gap-y-6 w-full">
           {/* Text content: eyebrow, heading, subtitle */}
           <Reveal className="lg:col-start-1 lg:row-start-1 lg:self-end">
-            <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
+            <p className="flex items-center gap-3 text-[15px] sm:text-[12px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
               <span className="w-8 h-[2px] bg-[#4FA8B8]" />
               Rolex India
             </p>
@@ -41,36 +41,36 @@ export default function Hero() {
 
           {/* Photo collage: right column on desktop, spans both rows to stay vertically centered.
               Each photo reveals individually, left-to-right, top-to-bottom. */}
-          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 flex justify-center lg:justify-end items-center gap-3 sm:gap-4">
-            <div className="flex flex-col gap-3 sm:gap-4">
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 flex sm:justify-center lg:justify-end items-center gap-3 sm:gap-4">
+            <div className="flex flex-col gap-3 sm:gap-4 flex-1 sm:flex-none">
               <Reveal delay={150}>
                 <img
                   src={heroBg}
                   alt="Rolex India steel manufacturing facility"
-                  className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
+                  className="w-full sm:w-48 lg:w-56 aspect-[4/5] object-cover"
                 />
               </Reveal>
               <Reveal delay={230}>
                 <img
                   src={heroBg1}
                   alt="Rolex India steel production line"
-                  className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
+                  className="w-full sm:w-48 lg:w-56 aspect-[4/3] object-cover"
                 />
               </Reveal>
             </div>
-            <div className="flex flex-col gap-3 sm:gap-4 mt-10 sm:mt-14">
+            <div className="flex flex-col gap-3 sm:gap-4 mt-10 sm:mt-14 flex-1 sm:flex-none">
               <Reveal delay={310}>
                 <img
                   src={heroBg2}
                   alt="Rolex India steel warehouse and inventory"
-                  className="w-36 sm:w-48 lg:w-56 aspect-[4/5] object-cover"
+                  className="w-full sm:w-48 lg:w-56 aspect-[4/5] object-cover"
                 />
               </Reveal>
               <Reveal delay={390}>
                 <img
                   src={heroBg3}
                   alt="Rolex India steel quality inspection"
-                  className="w-36 sm:w-48 lg:w-56 aspect-[4/3] object-cover"
+                  className="w-full sm:w-48 lg:w-56 aspect-[4/3] object-cover"
                 />
               </Reveal>
             </div>

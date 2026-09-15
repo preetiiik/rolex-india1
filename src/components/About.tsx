@@ -5,7 +5,7 @@ import Reveal from "./Reveal";
 const diversification = [
   "Furnace Tap Hole Drilling Equipment",
   "Precision Machined Components such as Idler Shafts, Mixer Shafts, and Fan Shafts",
-  "Sheet Metal Products, including Electrical Modular Boxes and Idler Bearing Housings",
+  "Sheet Metal Products, including Idler Bearing Housings",
 ];
 
 export default function About() {
