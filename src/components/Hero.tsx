@@ -24,7 +24,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-[38fr_62fr] lg:grid-rows-[auto_auto] gap-10 lg:gap-x-10 lg:gap-y-6 w-full">
           {/* Text content: eyebrow, heading, subtitle */}
           <Reveal className="lg:col-start-1 lg:row-start-1 lg:self-end">
-            <p className="flex items-center gap-3 text-[15px] sm:text-[12px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
+            <p className="flex items-center gap-3 text-[15px] sm:text-[16px] font-semibold uppercase tracking-[0.12em] text-white mb-5">
               <span className="w-8 h-[2px] bg-[#4FA8B8]" />
               Rolex India
             </p>

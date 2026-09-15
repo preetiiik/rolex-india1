@@ -8,36 +8,27 @@ export default function Footer() {
   return (
     <footer className="bg-[#14181C] text-white pt-14 sm:pt-16 lg:pt-20 pb-8">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 sm:pb-16 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14 pb-12 sm:pb-16 border-b border-white/10">
 
           {/* Logo & Address */}
           <Reveal delay={0}>
             <img
               src={logo}
               alt="Rolex India"
-              className="h-12 w-12  object-cover mb-5"
+              className="h-20 w-20 object-cover mb-5"
             />
 
-            <a
-  href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex gap-2.5 text-[14px] text-white/85 visited:text-white/85 no-underline leading-6 max-w-[280px] hover:text-white transition-colors duration-300"
->
-  <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
-    <MapPin size={15} className="text-white" />
-  </span>
-  <span>
-    B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubli,
-    Karnataka 580030, India
-  </span>
-</a>
+            <p className="text-[14px] leading-[1.7] text-white/70 max-w-[280px]">
+              A trusted name in the steel industry since 1990, Rolex India
+              manufactures precision bright bars and engineered components
+              for industries worldwide.
+            </p>
           </Reveal>
 
           {/* Navigation */}
           <Reveal delay={100}>
             <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-white/70 mb-4">
-              Company
+              Quick Links
             </p>
 
             <ul className="space-y-2.5">
@@ -60,7 +51,7 @@ export default function Footer() {
               Get In Touch
             </p>
 
-            <ul className="space-y-3">
+            <ul className="space-y-3.5">
 
               {/* Phone */}
               <li>
@@ -68,10 +59,9 @@ export default function Footer() {
                   href="tel:+919620664429"
                   className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300"
                 >
-                  <Phone
-                    size={15}
-                    className="text-white/70"
-                  />
+                  <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
+                    <Phone size={15} className="text-white/70" />
+                  </span>
                   +91 9620664429
                 </a>
               </li>
@@ -84,10 +74,9 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300"
                 >
-                  <FaWhatsapp
-                    size={17}
-                    className="text-white/70"
-                  />
+                  <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
+                    <FaWhatsapp size={17} className="text-white/70" />
+                  </span>
                   +91 9738347599
                 </a>
               </li>
@@ -98,11 +87,28 @@ export default function Footer() {
                   href="mailto:rolexindiahbl@gmail.com"
                   className="flex items-center gap-2.5 text-[15px] font-medium text-white hover:text-[#4FA8B8] transition-colors duration-300 break-all"
                 >
-                  <Mail
-                    size={15}
-                    className="text-white/70 flex-shrink-0"
-                  />
+                  <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
+                    <Mail size={15} className="text-white/70" />
+                  </span>
                   rolexindiahbl@gmail.com
+                </a>
+              </li>
+
+              {/* Address */}
+              <li>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex gap-2.5 text-[14px] text-white/85 visited:text-white/85 no-underline leading-6 max-w-[280px] hover:text-white transition-colors duration-300"
+                >
+                  <span className="flex items-center justify-center h-6 w-4 flex-shrink-0">
+                    <MapPin size={15} className="text-white" />
+                  </span>
+                  <span>
+                    B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubli,
+                    Karnataka 580030, India
+                  </span>
                 </a>
               </li>
 

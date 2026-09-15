@@ -5,7 +5,17 @@ import ImageLightbox from "./ImageLightbox";
 import Reveal from "./Reveal";
 import { useReveal } from "../hooks/UseReveal";
 
-function GalleryItem({ src, index, onClick }: { src: string; index: number; onClick: () => void }) {
+function GalleryItem({
+  src,
+  index,
+  isLast,
+  onClick,
+}: {
+  src: string;
+  index: number;
+  isLast: boolean;
+  onClick: () => void;
+}) {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
@@ -13,7 +23,11 @@ function GalleryItem({ src, index, onClick }: { src: string; index: number; onCl
       ref={ref}
       onClick={onClick}
       className={`reveal ${visible ? "is-visible" : ""} relative overflow-hidden group cursor-pointer ${
-        index === 0 ? "col-span-2 row-span-2 aspect-square lg:aspect-auto" : "aspect-square"
+        index === 0
+          ? "col-span-2 row-span-2 aspect-square lg:aspect-auto"
+          : isLast
+          ? "col-span-2 aspect-[2/1]"
+          : "aspect-square"
       }`}
       style={{ transitionDelay: `${(index % 4) * 90}ms` }}
     >
@@ -49,7 +63,13 @@ export default function Gallery() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-3 sm:gap-4 px-5 sm:px-8 lg:px-12 relative">
           {galleryImages.map((src, i) => (
-            <GalleryItem key={i} src={src} index={i} onClick={() => setActiveIndex(i)} />
+            <GalleryItem
+              key={i}
+              src={src}
+              index={i}
+              isLast={i === galleryImages.length - 1}
+              onClick={() => setActiveIndex(i)}
+            />
           ))}
         </div>
       </div>

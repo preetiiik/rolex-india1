@@ -62,13 +62,22 @@ export default function Navbar() {
         {/* Utility bar */}
         <div className="hidden sm:block bg-[#EAF1F1] border-b border-gray-200">
           <div className="max-w-[1440px] mx-auto flex items-center justify-between px-5 sm:px-8 lg:px-12 py-1.5">
-            <a
-              href="tel:+919620664429"
-              className="flex items-center gap-1.5 text-[12px] font-medium text-gray-600 hover:text-[#2F6F7E] transition-colors duration-300"
-            >
-              <Phone size={12} />
-              Call Now +91 9620664429
-            </a>
+            <div className="flex items-center gap-2.5">
+              <a
+                href="tel:+919620664429"
+                className="flex items-center gap-1.5 text-[12px] font-medium text-gray-600 hover:text-[#2F6F7E] transition-colors duration-300"
+              >
+                <Phone size={12} />
+                Call Now +91 9620664429
+              </a>
+              <span className="text-gray-300">|</span>
+              <a
+                href="tel:+919738347599"
+                className="text-[12px] font-medium text-gray-600 hover:text-[#2F6F7E] transition-colors duration-300"
+              >
+                +91 9738347599
+              </a>
+            </div>
             <a
               href="mailto:rolexindiahbl@gmail.com"
               className="flex items-center gap-1.5 text-[12px] font-medium text-gray-600 hover:text-[#2F6F7E] transition-colors duration-300"
