@@ -15,75 +15,201 @@ type FieldConfig = {
   label: string;
   required: boolean;
   type?: string;
+  maxLength?: number;
+  inputMode?: "text" | "numeric" | "email" | "tel";
   validate: (value: string) => string;
 };
 
-const NAME_PATTERN = /^[A-Za-z][A-Za-z\s.'-]*$/;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_PATTERN = /^\+?[0-9]{10,15}$/;
+/* =====================================================
+   VALIDATION PATTERNS
+===================================================== */
+
+// Letters and spaces only
+const NAME_PATTERN = /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/;
+
+// Email
+const EMAIL_PATTERN =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Exactly 10 digits
+const PHONE_PATTERN = /^[0-9]{10}$/;
+
+// Numbers only
+const QUANTITY_PATTERN = /^[0-9]+$/;
+
+// Letters, numbers and spaces
+const MATERIAL_PATTERN =
+  /^[A-Za-z0-9]+(?:\s+[A-Za-z0-9]+)*$/;
+
+
+/* =====================================================
+   FORM FIELDS
+===================================================== */
 
 const fields: FieldConfig[] = [
   {
     name: "entityName",
     label: "Entity Name",
     required: true,
-    validate: (v) =>
-      v.trim().length < 2
-        ? "Enter a valid entity name"
-        : "",
+    maxLength: 100,
+    inputMode: "text",
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Entity name is required";
+      }
+
+      if (v.length < 2) {
+        return "Entity name must contain at least 2 characters";
+      }
+
+      if (!NAME_PATTERN.test(v)) {
+        return "Entity name should contain letters and spaces only";
+      }
+
+      return "";
+    },
   },
+
   {
     name: "contactPerson",
     label: "Contact Person",
     required: true,
-    validate: (v) =>
-      !NAME_PATTERN.test(v.trim())
-        ? "Name should only contain letters"
-        : "",
+    maxLength: 100,
+    inputMode: "text",
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Contact person is required";
+      }
+
+      if (v.length < 2) {
+        return "Contact person must contain at least 2 characters";
+      }
+
+      if (!NAME_PATTERN.test(v)) {
+        return "Contact person should contain letters and spaces only";
+      }
+
+      return "";
+    },
   },
+
   {
     name: "email",
     label: "Email ID",
     required: true,
     type: "email",
-    validate: (v) =>
-      !EMAIL_PATTERN.test(v.trim())
-        ? "Enter a valid email address"
-        : "",
+    maxLength: 150,
+    inputMode: "email",
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Email ID is required";
+      }
+
+      if (!EMAIL_PATTERN.test(v)) {
+        return "Enter a valid email address";
+      }
+
+      return "";
+    },
   },
+
   {
     name: "phone",
     label: "Phone No.",
     required: true,
     type: "tel",
-    validate: (v) =>
-      !PHONE_PATTERN.test(v.trim())
-        ? "Enter a valid phone number (digits only)"
-        : "",
+    maxLength: 10,
+    inputMode: "numeric",
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Phone number is required";
+      }
+
+      if (!/^[0-9]+$/.test(v)) {
+        return "Phone number should contain digits only";
+      }
+
+      if (v.length !== 10) {
+        return "Phone number must contain exactly 10 digits";
+      }
+
+      if (!PHONE_PATTERN.test(v)) {
+        return "Enter a valid 10-digit phone number";
+      }
+
+      return "";
+    },
   },
+
   {
     name: "quantity",
     label: "Quantity Required",
     required: true,
-    validate: (v) =>
-      !/\d/.test(v)
-        ? "Enter a valid quantity (numbers required)"
-        : "",
+    maxLength: 10,
+    inputMode: "numeric",
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Quantity is required";
+      }
+
+      if (!QUANTITY_PATTERN.test(v)) {
+        return "Quantity should contain numbers only";
+      }
+
+      if (Number(v) <= 0) {
+        return "Quantity must be greater than 0";
+      }
+
+      return "";
+    },
   },
+
   {
     name: "material",
     label: "Material",
     required: true,
-    validate: (v) =>
-      v.trim().length < 1
-        ? "Material is required"
-        : "",
+    maxLength: 100,
+    inputMode: "text",
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Material is required";
+      }
+
+      if (!MATERIAL_PATTERN.test(v)) {
+        return "Material should contain letters, numbers and spaces only";
+      }
+
+      return "";
+    },
   },
 ];
 
 const emptyValues = Object.fromEntries(
-  fields.map((f) => [f.name, ""])
+  fields.map((field) => [field.name, ""])
 );
+
+
+/* =====================================================
+   CONTACT COMPONENT
+===================================================== */
 
 export default function Contact() {
   const [values, setValues] =
@@ -104,74 +230,106 @@ export default function Contact() {
   const [submitError, setSubmitError] =
     useState("");
 
-  // Handle input changes
+
+  /* ===================================================
+     HANDLE INPUT CHANGE
+  =================================================== */
+
   const handleChange = (
     name: string,
     value: string
   ) => {
-    setValues((prev) => ({
-      ...prev,
+    /*
+      Phone:
+      Only allow digits and maximum 10 characters.
+    */
+    if (name === "phone") {
+      value = value.replace(/\D/g, "").slice(0, 10);
+    }
+
+    /*
+      Quantity:
+      Only allow numbers.
+    */
+    if (name === "quantity") {
+      value = value.replace(/\D/g, "");
+    }
+
+    setValues((previous) => ({
+      ...previous,
       [name]: value,
     }));
 
+    /*
+      If the user has already interacted with
+      the field, validate it immediately.
+    */
     if (touched[name]) {
       const field = fields.find(
-        (f) => f.name === name
+        (item) => item.name === name
       );
 
       if (!field) return;
 
-      setErrors((prev) => ({
-        ...prev,
-        [name]: value.trim()
-          ? field.validate(value)
-          : "",
+      setErrors((previous) => ({
+        ...previous,
+        [name]: field.validate(value),
       }));
     }
   };
 
-  // Validate field when user leaves it
+
+  /* ===================================================
+     HANDLE BLUR
+  =================================================== */
+
   const handleBlur = (name: string) => {
-    setTouched((prev) => ({
-      ...prev,
+    setTouched((previous) => ({
+      ...previous,
       [name]: true,
     }));
 
     const field = fields.find(
-      (f) => f.name === name
+      (item) => item.name === name
     );
 
     if (!field) return;
 
-    const value = values[name];
+    const error = field.validate(values[name]);
 
-    setErrors((prev) => ({
-      ...prev,
-      [name]: !value.trim()
-        ? "This field is required"
-        : field.validate(value),
+    setErrors((previous) => ({
+      ...previous,
+      [name]: error,
     }));
   };
 
-  // Submit form to backend
-  const handleSubmit = async (
-    e: React.FormEvent
-  ) => {
-    e.preventDefault();
 
-    // Validate all fields first
+  /* ===================================================
+     SUBMIT
+  =================================================== */
+
+  const handleSubmit = async (
+    event: React.FormEvent
+  ) => {
+    event.preventDefault();
+
+    setSubmitError("");
+
     const nextErrors: Record<string, string> = {};
 
+    /*
+      Validate every field.
+    */
     fields.forEach((field) => {
-      const value = values[field.name];
-
-      nextErrors[field.name] = !value.trim()
-        ? "This field is required"
-        : field.validate(value);
+      nextErrors[field.name] =
+        field.validate(values[field.name]);
     });
 
     setErrors(nextErrors);
 
+    /*
+      Mark every field as touched.
+    */
     setTouched(
       Object.fromEntries(
         fields.map((field) => [
@@ -181,25 +339,33 @@ export default function Contact() {
       )
     );
 
+    /*
+      Stop submission if ANY field has an error.
+    */
     const hasErrors =
-      Object.values(nextErrors).some(Boolean);
+      Object.values(nextErrors).some(
+        (error) => Boolean(error)
+      );
 
     if (hasErrors) {
       return;
     }
 
-    // Start submitting
     setIsSubmitting(true);
-    setSubmitError("");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "/api/contact",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(values),
+        }
+      );
 
       const result = await response.json();
 
@@ -210,13 +376,18 @@ export default function Contact() {
         );
       }
 
-      // Successful submission
+      /*
+        Successful submission.
+      */
       setValues(emptyValues);
       setErrors({});
       setTouched({});
 
-      // Show popup
+      /*
+        Show success popup.
+      */
       setShowSuccessPopup(true);
+
     } catch (error) {
       console.error(
         "Contact form submission error:",
@@ -233,6 +404,11 @@ export default function Contact() {
     }
   };
 
+
+  /* ===================================================
+     JSX
+  =================================================== */
+
   return (
     <>
       <section
@@ -240,8 +416,11 @@ export default function Contact() {
         className="bg-[#EAF1F1]"
       >
         <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20">
-          
-          {/* Heading */}
+
+          {/* ===========================
+              HEADING
+          ============================ */}
+
           <Reveal className="text-center mb-10 sm:mb-14 lg:mb-16">
             <h2
               className="font-bold leading-[1.05] tracking-tight text-gray-900"
@@ -256,14 +435,15 @@ export default function Contact() {
             <span className="inline-block w-14 h-[3px] bg-[#2F6F7E] mt-5" />
           </Reveal>
 
+
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
 
-            {/* =========================================
-                LEFT SIDE - CONTACT INFORMATION
-            ========================================== */}
+            {/* ===========================
+                CONTACT INFORMATION
+            ============================ */}
+
             <Reveal className="space-y-5">
 
-              {/* Phone */}
               <a
                 href="tel:+919620664429"
                 className="flex items-center gap-3 text-[14px] sm:text-[15px] font-medium text-gray-700 hover:text-[#2F6F7E] transition-colors duration-300"
@@ -278,7 +458,7 @@ export default function Contact() {
                 </span>
               </a>
 
-              {/* WhatsApp */}
+
               <a
                 href="https://wa.me/919738347599"
                 target="_blank"
@@ -295,7 +475,7 @@ export default function Contact() {
                 </span>
               </a>
 
-              {/* Email */}
+
               <a
                 href="mailto:rolexindiahbl@gmail.com"
                 className="flex items-center gap-3 text-[14px] sm:text-[15px] font-medium text-gray-700 hover:text-[#2F6F7E] transition-colors duration-300 break-all"
@@ -310,7 +490,7 @@ export default function Contact() {
                 </span>
               </a>
 
-              {/* Address */}
+
               <a
                 href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
                 target="_blank"
@@ -328,11 +508,14 @@ export default function Contact() {
                   Karnataka 580030, India
                 </span>
               </a>
+
             </Reveal>
 
-            {/* =========================================
-                RIGHT SIDE - CONTACT FORM
-            ========================================== */}
+
+            {/* ===========================
+                FORM
+            ============================ */}
+
             <Reveal
               delay={120}
               className="w-full"
@@ -343,7 +526,6 @@ export default function Contact() {
                 className="w-full"
               >
 
-                {/* Form Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
 
                   {fields.map((field) => (
@@ -352,7 +534,8 @@ export default function Contact() {
                       className="flex flex-col gap-2"
                     >
 
-                      {/* Label */}
+                      {/* LABEL */}
+
                       <span className="text-[12px] font-bold uppercase tracking-wide text-gray-500">
                         {field.label}
 
@@ -363,7 +546,9 @@ export default function Contact() {
                         )}
                       </span>
 
-                      {/* Input */}
+
+                      {/* INPUT */}
+
                       <input
                         type={
                           field.type ?? "text"
@@ -371,10 +556,23 @@ export default function Contact() {
                         value={
                           values[field.name]
                         }
-                        onChange={(e) =>
+                        maxLength={
+                          field.maxLength
+                        }
+                        inputMode={
+                          field.inputMode
+                        }
+                        autoComplete={
+                          field.name === "email"
+                            ? "email"
+                            : field.name === "phone"
+                            ? "tel"
+                            : "off"
+                        }
+                        onChange={(event) =>
                           handleChange(
                             field.name,
-                            e.target.value
+                            event.target.value
                           )
                         }
                         onBlur={() =>
@@ -394,9 +592,14 @@ export default function Contact() {
                         }`}
                       />
 
-                      {/* Validation Error */}
+
+                      {/* ERROR */}
+
                       {errors[field.name] && (
-                        <span className="text-[12px] text-red-500">
+                        <span
+                          className="text-[12px] text-red-500"
+                          role="alert"
+                        >
                           {errors[field.name]}
                         </span>
                       )}
@@ -406,7 +609,11 @@ export default function Contact() {
 
                 </div>
 
-                {/* Submit Button */}
+
+                {/* ===========================
+                    SEND BUTTON
+                ============================ */}
+
                 <div className="mt-8 sm:mt-10">
                   <RollButton
                     text={
@@ -419,9 +626,16 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Backend Error */}
+
+                {/* ===========================
+                    BACKEND ERROR
+                ============================ */}
+
                 {submitError && (
-                  <p className="mt-4 text-[13px] text-red-500">
+                  <p
+                    className="mt-4 text-[13px] text-red-500"
+                    role="alert"
+                  >
                     {submitError}
                   </p>
                 )}
@@ -432,23 +646,28 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* =========================================
+
+        {/* ===========================
             GOOGLE MAP
-        ========================================== */}
+        ============================ */}
+
         <div className="w-full h-[380px] sm:h-[440px]">
           <iframe
             title="Rolex India location"
-            src="https://www.google.com/maps?q=B-348,%20Industrial%20Estate%20Gokul%20Rd,%20Industrial%20Estate,%20Hubli,%20Karnataka%20580030,%20India&output=embed"
+            src="https://www.google.com/maps?q=B-348,%20Industrial%20Estate%20Gokul%20Rd,%20Industrial%20Estate,%20Hubli,%20Karnataka%20580030%2C%20India&output=embed"
             className="w-full h-full border-0"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
+
       </section>
 
-      {/* ===========================================
+
+      {/* =================================================
           SUCCESS POPUP
-      ============================================ */}
+      ================================================== */}
+
       {showSuccessPopup && (
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 px-5"
@@ -456,14 +675,16 @@ export default function Contact() {
             setShowSuccessPopup(false)
           }
         >
+
           <div
             className="relative w-full max-w-[440px] bg-white px-7 py-9 sm:px-10 sm:py-11 text-center shadow-2xl"
-            onClick={(e) =>
-              e.stopPropagation()
+            onClick={(event) =>
+              event.stopPropagation()
             }
           >
 
-            {/* Close Button */}
+            {/* CLOSE */}
+
             <button
               type="button"
               onClick={() =>
@@ -475,7 +696,9 @@ export default function Contact() {
               <X size={20} />
             </button>
 
-            {/* Success Icon */}
+
+            {/* SUCCESS ICON */}
+
             <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#EAF1F1]">
               <CheckCircle
                 size={34}
@@ -484,12 +707,16 @@ export default function Contact() {
               />
             </div>
 
-            {/* Heading */}
+
+            {/* TITLE */}
+
             <h3 className="text-2xl font-bold text-gray-900">
               Enquiry Submitted!
             </h3>
 
-            {/* Message */}
+
+            {/* MESSAGE */}
+
             <p className="mt-3 text-[14px] leading-6 text-gray-600">
               Thank you for contacting
               Rolex India. Your enquiry has
@@ -497,7 +724,9 @@ export default function Contact() {
               We'll get back to you shortly.
             </p>
 
-            {/* OK Button */}
+
+            {/* OK */}
+
             <button
               type="button"
               onClick={() =>
@@ -509,6 +738,7 @@ export default function Contact() {
             </button>
 
           </div>
+
         </div>
       )}
     </>

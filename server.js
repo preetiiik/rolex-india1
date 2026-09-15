@@ -1,13 +1,17 @@
+import express from "express";
 import nodemailer from "nodemailer";
+// import process from "node:process";
+import "dotenv/config";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed",
-    });
-  }
+console.log("EMAIL_USER loaded:", !!process.env.EMAIL_USER);
+console.log("EMAIL_PASS loaded:", !!process.env.EMAIL_PASS);
 
+const app = express();
+const PORT = 5000;
+
+app.use(express.json());
+
+app.post("/api/contact", async (req, res) => {
   try {
     const {
       entityName,
@@ -16,9 +20,8 @@ export default async function handler(req, res) {
       phone,
       quantity,
       material,
-    } = req.body || {};
+    } = req.body;
 
-    // Validate required fields
     if (
       !entityName ||
       !contactPerson ||
@@ -33,9 +36,11 @@ export default async function handler(req, res) {
       });
     }
 
-    // Email validation
     const emailPattern =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const phonePattern =
+      /^\+?[0-9]{10,15}$/;
 
     if (!emailPattern.test(email.trim())) {
       return res.status(400).json({
@@ -44,10 +49,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Phone validation
-    const phonePattern =
-      /^\+?[0-9]{10,15}$/;
-
     if (!phonePattern.test(phone.trim())) {
       return res.status(400).json({
         success: false,
@@ -55,7 +56,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Check environment variables
     if (
       !process.env.EMAIL_USER ||
       !process.env.EMAIL_PASS
@@ -70,7 +70,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Gmail transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -79,7 +78,6 @@ export default async function handler(req, res) {
       },
     });
 
-    // Send email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -96,10 +94,7 @@ export default async function handler(req, res) {
           color: #333;
         ">
 
-          <h2 style="
-            color: #2F6F7E;
-            margin-bottom: 10px;
-          ">
+          <h2 style="color: #2F6F7E;">
             New Website Enquiry
           </h2>
 
@@ -115,104 +110,55 @@ export default async function handler(req, res) {
           ">
 
             <tr>
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-                font-weight: bold;
-                width: 40%;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">
                 Entity Name
               </td>
-
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd;">
                 ${entityName}
               </td>
             </tr>
 
             <tr>
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-                font-weight: bold;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">
                 Contact Person
               </td>
-
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd;">
                 ${contactPerson}
               </td>
             </tr>
 
             <tr>
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-                font-weight: bold;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">
                 Email ID
               </td>
-
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd;">
                 ${email}
               </td>
             </tr>
 
             <tr>
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-                font-weight: bold;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">
                 Phone No.
               </td>
-
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd;">
                 ${phone}
               </td>
             </tr>
 
             <tr>
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-                font-weight: bold;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">
                 Quantity Required
               </td>
-
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd;">
                 ${quantity}
               </td>
             </tr>
 
             <tr>
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-                font-weight: bold;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd; font-weight: bold;">
                 Material
               </td>
-
-              <td style="
-                padding: 12px;
-                border: 1px solid #ddd;
-              ">
+              <td style="padding: 12px; border: 1px solid #ddd;">
                 ${material}
               </td>
             </tr>
@@ -232,6 +178,10 @@ export default async function handler(req, res) {
       `,
     });
 
+    console.log(
+      "Enquiry email sent successfully."
+    );
+
     return res.status(200).json({
       success: true,
       message: "Enquiry submitted successfully.",
@@ -249,4 +199,10 @@ export default async function handler(req, res) {
         "Unable to send enquiry. Please try again.",
     });
   }
-}
+});
+
+app.listen(PORT, () => {
+  console.log(
+    `Backend server running on http://localhost:${PORT}`
+  );
+});
