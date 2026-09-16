@@ -25,7 +25,7 @@ import steelMaterialsImg from "../assets/what-we-do/steel-materials.webp";
 export const navLinks = [
   { label: "Home", href: "/#home" },
   { label: "About Us", href: "/#about" },
-  { label: "Products", href: "/#products" },
+  { label: "Our Products", href: "/#products" },
   { label: "Gallery", href: "/#gallery" },
   { label: "Contact Us", href: "/#contact" },
   { label: "Enquiry", href: "/#contact" },
@@ -44,7 +44,7 @@ export const whatWeDo = [
   },
   {
     n: 3,
-    text: "We produce sheet metal components such as electrical modular boxes and idler bearing housings.",
+    text: "We produce sheet metal components such as electrical modular boxes and idler bearing housing.",
     image: fp6,
   },
   // {
@@ -111,7 +111,7 @@ export const products = [
   {
     title: "Drill Bar",
     description:
-      "We manufacture Drill Bars using C45-grade hot rolled seamless pipes, designed for mining and furnace tap hole drilling, and seamlessly connected to drill machines with adaptors.",
+      "We manufacture Drill Bars using C45-grade hot-rolled seamless pipes, designed for mining and furnace tap hole drilling, and seamlessly connected to drill machines with adaptors.",
     image: fp9,
   },
   {
@@ -138,8 +138,8 @@ export const galleryImages = [gallery1, gallery2, gallery3, gallery4];
 
 export const footerNav = [
   { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
-  { label: "Products", href: "/#products" },
+  { label: "About Us", href: "/#about" },
+  { label: " Our Products", href: "/#products" },
   { label: "Gallery", href: "/#gallery" },
-  { label: "Contacts", href: "/#contact" },
+  { label: "Contact Us", href: "/#contact" },
 ];

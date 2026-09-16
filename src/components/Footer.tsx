@@ -12,11 +12,13 @@ export default function Footer() {
 
           {/* Logo & Address */}
           <Reveal delay={0}>
-            <img
-              src={logo}
-              alt="Rolex India"
-              className="h-20 w-20 object-cover mb-5"
-            />
+            <a href="/" aria-label="Go to Home">
+              <img
+                src={logo}
+                alt="Rolex India"
+                className="h-20 w-20 object-cover mb-5 cursor-pointer"
+              />
+            </a>
 
             <p className="text-[14px] leading-[1.7] text-white/70 max-w-[280px]">
               A trusted name in the steel industry since 1990, Rolex India
@@ -26,7 +28,7 @@ export default function Footer() {
           </Reveal>
 
           {/* Navigation */}
-          <Reveal delay={100}>
+          <Reveal delay={100} className="md:ml-6 lg:ml-10">
             <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-white/70 mb-4">
               Quick Links
             </p>
@@ -97,7 +99,7 @@ export default function Footer() {
               {/* Address */}
               <li>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
+                  href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubballi%2C%20Karnataka%20580030%2C%20India"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex gap-2.5 text-[14px] text-white/85 visited:text-white/85 no-underline leading-6 max-w-[280px] hover:text-white transition-colors duration-300"
@@ -106,7 +108,7 @@ export default function Footer() {
                     <MapPin size={15} className="text-white" />
                   </span>
                   <span>
-                    B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubli,
+                    B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubballi,
                     Karnataka 580030, India
                   </span>
                 </a>
@@ -117,7 +119,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <Reveal delay={280} className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
          <p className="text-[13px] text-white/80">
   © 2025 ROLEX INDIA. All Rights Reserved.{" "}
@@ -152,7 +154,7 @@ export default function Footer() {
   </a>
 </div>
 
-        </Reveal>
+        </div>
       </div>
     </footer>
   );

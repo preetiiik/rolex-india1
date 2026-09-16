@@ -3,7 +3,7 @@ import aboutImg from "../assets/about-us.webp";
 const diversification = [
   "Furnace Tap Hole Drilling Equipment",
   "Precision Machined Components such as Idler Shafts, Mixer Shafts, and Fan Shafts",
-  "Sheet Metal Products, including Electrical Modular Boxes and Idler Bearing Housings",
+  "Sheet Metal Products, including Electrical Modular Boxes and Idler Bearing Housing",
 ];
 
 export default function About() {

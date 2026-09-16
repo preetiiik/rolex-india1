@@ -9,6 +9,7 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import RollButton from "./RollButton";
 import Reveal from "./Reveal";
+import { products } from "../data/content";
 
 type FieldConfig = {
   name: string;
@@ -17,6 +18,7 @@ type FieldConfig = {
   type?: string;
   maxLength?: number;
   inputMode?: "text" | "numeric" | "email" | "tel";
+  options?: string[];
   validate: (value: string) => string;
 };
 
@@ -36,10 +38,6 @@ const PHONE_PATTERN = /^[6-9][0-9]{9}$/;
 
 // Numbers only
 const QUANTITY_PATTERN = /^[0-9]+$/;
-
-// Letters, numbers and spaces
-const MATERIAL_PATTERN =
-  /^[A-Za-z0-9]+(?:\s+[A-Za-z0-9]+)*$/;
 
 
 /* =====================================================
@@ -184,21 +182,44 @@ const fields: FieldConfig[] = [
   },
 
   {
-    name: "material",
-    label: "Material",
+    name: "product",
+    label: "Product Required",
     required: true,
-    maxLength: 100,
-    inputMode: "text",
+    options: products.map((product) => product.title),
 
     validate: (value) => {
       const v = value.trim();
 
       if (!v) {
-        return "Material is required";
+        return "Please select a product";
       }
 
-      if (!MATERIAL_PATTERN.test(v)) {
-        return "Material should contain letters, numbers and spaces only";
+      return "";
+    },
+  },
+
+  {
+    name: "material",
+    label: "Material",
+    required: true,
+    options: [
+      "Mild Steel (MS)",
+      "Stainless Steel (SS)",
+      "Carbon Steel",
+      "Alloy Steel",
+      "Free Cutting Steel (FCS)",
+      "EN8",
+      "EN9",
+      "EN19",
+      "EN24",
+      "Spring Steel",
+    ],
+
+    validate: (value) => {
+      const v = value.trim();
+
+      if (!v) {
+        return "Please select a material";
       }
 
       return "";
@@ -236,7 +257,9 @@ export default function Contact() {
 
   // Tracks each field's input DOM node so we can focus the first
   // invalid one if the form fails validation on submit.
-  const fieldRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const fieldRefs = useRef<
+    Record<string, HTMLInputElement | HTMLSelectElement | null>
+  >({});
 
 
   /* ===================================================
@@ -443,13 +466,13 @@ export default function Contact() {
         id="contact"
         className="bg-[#EAF1F1]"
       >
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16 sm:pb-20">
 
           {/* ===========================
               HEADING
           ============================ */}
 
-          <Reveal className="text-center mb-10 sm:mb-14 lg:mb-16">
+          <Reveal className="text-center mb-8 sm:mb-10 lg:mb-12">
             <h2
               className="font-bold leading-[1.05] tracking-tight text-gray-900"
               style={{
@@ -520,7 +543,7 @@ export default function Contact() {
 
 
               <a
-                href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubli%2C%20Karnataka%20580030%2C%20India"
+                href="https://www.google.com/maps/search/?api=1&query=B-348%2C%20Industrial%20Estate%20Gokul%20Rd%2C%20Industrial%20Estate%2C%20Hubballi%2C%20Karnataka%20580030%2C%20India"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 text-[14px] sm:text-[15px] font-medium text-gray-700 hover:text-[#2F6F7E] transition-colors duration-300"
@@ -532,7 +555,7 @@ export default function Contact() {
 
                 <span>
                   B-348, Industrial Estate Gokul Rd,
-                  Industrial Estate, Hubli,
+                  Industrial Estate, Hubballi,
                   Karnataka 580030, India
                 </span>
               </a>
@@ -575,62 +598,113 @@ export default function Contact() {
                       </span>
 
 
-                      {/* INPUT */}
+                      {/* INPUT / SELECT */}
 
-                      <input
-                        ref={(el) => {
-                          fieldRefs.current[field.name] = el;
-                        }}
-                        id={`field-${field.name}`}
-                        type={
-                          field.type ?? "text"
-                        }
-                        value={
-                          values[field.name]
-                        }
-                        maxLength={
-                          field.maxLength
-                        }
-                        inputMode={
-                          field.inputMode
-                        }
-                        autoComplete={
-                          field.name === "email"
-                            ? "email"
-                            : field.name === "phone"
-                            ? "tel"
-                            : "off"
-                        }
-                        aria-invalid={
-                          Boolean(errors[field.name])
-                        }
-                        aria-describedby={
-                          errors[field.name]
-                            ? `error-${field.name}`
-                            : undefined
-                        }
-                        onChange={(event) =>
-                          handleChange(
-                            field.name,
-                            event.target.value
-                          )
-                        }
-                        onBlur={() =>
-                          handleBlur(
-                            field.name
-                          )
-                        }
-                        disabled={isSubmitting}
-                        className={`w-full border bg-white px-4 py-3 text-[14px] text-gray-900 outline-none transition-colors duration-300 ${
-                          errors[field.name]
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-gray-200 focus:border-[#2F6F7E]"
-                        } ${
-                          isSubmitting
-                            ? "cursor-not-allowed opacity-60"
-                            : ""
-                        }`}
-                      />
+                      {field.options ? (
+                        <select
+                          ref={(el) => {
+                            fieldRefs.current[field.name] = el;
+                          }}
+                          id={`field-${field.name}`}
+                          value={
+                            values[field.name]
+                          }
+                          aria-invalid={
+                            Boolean(errors[field.name])
+                          }
+                          aria-describedby={
+                            errors[field.name]
+                              ? `error-${field.name}`
+                              : undefined
+                          }
+                          onChange={(event) =>
+                            handleChange(
+                              field.name,
+                              event.target.value
+                            )
+                          }
+                          onBlur={() =>
+                            handleBlur(
+                              field.name
+                            )
+                          }
+                          disabled={isSubmitting}
+                          className={`w-full border bg-white px-4 py-3 text-[14px] text-gray-900 outline-none transition-colors duration-300 ${
+                            errors[field.name]
+                              ? "border-red-500 focus:border-red-500"
+                              : "border-gray-200 focus:border-[#2F6F7E]"
+                          } ${
+                            isSubmitting
+                              ? "cursor-not-allowed opacity-60"
+                              : ""
+                          }`}
+                        >
+                          <option value="" disabled>
+                            Select material
+                          </option>
+
+                          {field.options.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          ref={(el) => {
+                            fieldRefs.current[field.name] = el;
+                          }}
+                          id={`field-${field.name}`}
+                          type={
+                            field.type ?? "text"
+                          }
+                          value={
+                            values[field.name]
+                          }
+                          maxLength={
+                            field.maxLength
+                          }
+                          inputMode={
+                            field.inputMode
+                          }
+                          autoComplete={
+                            field.name === "email"
+                              ? "email"
+                              : field.name === "phone"
+                              ? "tel"
+                              : "off"
+                          }
+                          aria-invalid={
+                            Boolean(errors[field.name])
+                          }
+                          aria-describedby={
+                            errors[field.name]
+                              ? `error-${field.name}`
+                              : undefined
+                          }
+                          onChange={(event) =>
+                            handleChange(
+                              field.name,
+                              event.target.value
+                            )
+                          }
+                          onBlur={() =>
+                            handleBlur(
+                              field.name
+                            )
+                          }
+                          disabled={isSubmitting}
+                          className={`w-full border bg-white px-4 py-3 text-[14px] text-gray-900 outline-none transition-colors duration-300 ${
+                            errors[field.name]
+                              ? "border-red-500 focus:border-red-500"
+                              : "border-gray-200 focus:border-[#2F6F7E]"
+                          } ${
+                            isSubmitting
+                              ? "cursor-not-allowed opacity-60"
+                              : ""
+                          }`}
+                        />
+                      )}
 
 
                       {/* ERROR */}
@@ -696,7 +770,7 @@ export default function Contact() {
         <div className="w-full h-[380px] sm:h-[440px]">
           <iframe
             title="Rolex India location"
-            src="https://www.google.com/maps?q=B-348,%20Industrial%20Estate%20Gokul%20Rd,%20Industrial%20Estate,%20Hubli,%20Karnataka%20580030%2C%20India&output=embed"
+            src="https://www.google.com/maps?q=B-348,%20Industrial%20Estate%20Gokul%20Rd,%20Industrial%20Estate,%20Hubballi,%20Karnataka%20580030%2C%20India&output=embed"
             className="w-full h-full border-0"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
