@@ -13,6 +13,9 @@ export default function Navbar() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
 
+  // Extracts the section id from an href like "/#home" or "#home" -> "home"
+  const getSectionId = (href: string) => href.split("#")[1] ?? "";
+
   const sectionHref = (hash: string) => (isHome ? hash : `/${hash}`);
   const goToSection = (hash: string) => {
     if (isHome) {
@@ -29,7 +32,7 @@ export default function Navbar() {
       new Set(
         navLinks
           .filter((l) => l.label !== "Enquiry")
-          .map((l) => l.href.replace("#", ""))
+          .map((l) => getSectionId(l.href))
       )
     );
     const sections = ids
@@ -54,7 +57,7 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, [isHome]);
 
-  const isActive = (hash: string) => isHome && activeSection === hash.replace("#", "");
+  const isActive = (hash: string) => isHome && activeSection === getSectionId(hash);
 
   return (
     <>

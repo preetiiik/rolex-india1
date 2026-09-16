@@ -24,10 +24,10 @@ import steelMaterialsImg from "../assets/what-we-do/steel-materials.webp";
 
 export const navLinks = [
   { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
-  { label: "Product", href: "/#products" },
+  { label: "About Us", href: "/#about" },
+  { label: "Products", href: "/#products" },
   { label: "Gallery", href: "/#gallery" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact Us", href: "/#contact" },
   { label: "Enquiry", href: "/#contact" },
 ];
 
