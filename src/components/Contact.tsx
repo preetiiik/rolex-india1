@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Mail,
   MapPin,
@@ -31,8 +31,8 @@ const NAME_PATTERN = /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/;
 const EMAIL_PATTERN =
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Exactly 10 digits
-const PHONE_PATTERN = /^[0-9]{10}$/;
+// Starts with 6-9, followed by exactly 9 more digits (10 digits total)
+const PHONE_PATTERN = /^[6-9][0-9]{9}$/;
 
 // Numbers only
 const QUANTITY_PATTERN = /^[0-9]+$/;
@@ -124,7 +124,7 @@ const fields: FieldConfig[] = [
 
   {
     name: "phone",
-    label: "Phone No.",
+    label: "Phone Number",
     required: true,
     type: "tel",
     maxLength: 10,
@@ -143,6 +143,10 @@ const fields: FieldConfig[] = [
 
       if (v.length !== 10) {
         return "Phone number must contain exactly 10 digits";
+      }
+
+      if (!/^[6-9]/.test(v)) {
+        return "Phone number must start with a digit from 6 to 9";
       }
 
       if (!PHONE_PATTERN.test(v)) {
@@ -230,6 +234,10 @@ export default function Contact() {
   const [submitError, setSubmitError] =
     useState("");
 
+  // Tracks each field's input DOM node so we can focus the first
+  // invalid one if the form fails validation on submit.
+  const fieldRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
 
   /* ===================================================
      HANDLE INPUT CHANGE
@@ -253,6 +261,14 @@ export default function Contact() {
     */
     if (name === "quantity") {
       value = value.replace(/\D/g, "");
+    }
+
+    /*
+      Entity Name / Contact Person:
+      Only allow letters and spaces.
+    */
+    if (name === "entityName" || name === "contactPerson") {
+      value = value.replace(/[^A-Za-z\s]/g, "");
     }
 
     setValues((previous) => ({
@@ -348,6 +364,18 @@ export default function Contact() {
       );
 
     if (hasErrors) {
+      /*
+        Move focus to the first invalid field so keyboard and
+        screen-reader users land directly on what needs fixing.
+      */
+      const firstErrorField = fields.find(
+        (field) => nextErrors[field.name]
+      );
+
+      if (firstErrorField) {
+        fieldRefs.current[firstErrorField.name]?.focus();
+      }
+
       return;
     }
 
@@ -550,6 +578,10 @@ export default function Contact() {
                       {/* INPUT */}
 
                       <input
+                        ref={(el) => {
+                          fieldRefs.current[field.name] = el;
+                        }}
+                        id={`field-${field.name}`}
                         type={
                           field.type ?? "text"
                         }
@@ -568,6 +600,14 @@ export default function Contact() {
                             : field.name === "phone"
                             ? "tel"
                             : "off"
+                        }
+                        aria-invalid={
+                          Boolean(errors[field.name])
+                        }
+                        aria-describedby={
+                          errors[field.name]
+                            ? `error-${field.name}`
+                            : undefined
                         }
                         onChange={(event) =>
                           handleChange(
@@ -597,6 +637,7 @@ export default function Contact() {
 
                       {errors[field.name] && (
                         <span
+                          id={`error-${field.name}`}
                           className="text-[12px] text-red-500"
                           role="alert"
                         >
@@ -623,6 +664,7 @@ export default function Contact() {
                     }
                     variant="teal"
                     type="submit"
+                    disabled={isSubmitting}
                   />
                 </div>
 

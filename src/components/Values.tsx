@@ -14,7 +14,7 @@ export default function Values() {
           className="font-bold leading-[1.05] tracking-tight text-white px-5"
           style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
         >
-          Values
+          Our Values
         </h2>
         <span className="block w-14 h-[3px] bg-[#4FA8B8] mt-5 mb-8 sm:mb-10" />
 

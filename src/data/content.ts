@@ -44,7 +44,7 @@ export const whatWeDo = [
   },
   {
     n: 3,
-    text: "We produce sheet metal components such as electrical modular boxes and idler bearing housing.",
+    text: "We produce sheet metal components such as electrical modular boxes and idler bearing housings.",
     image: fp6,
   },
   // {

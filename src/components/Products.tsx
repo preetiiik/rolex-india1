@@ -31,7 +31,7 @@ function ProductCard({ p, index, isRevealed, onCardClick }: ProductCardProps) {
 
       {/* Default label, hidden once revealed/hovered */}
       <div
-        className={`absolute bottom-4 left-4 bg-[#14181C]/90 px-4 py-2.5 transition-opacity duration-300 sm:group-hover:opacity-0 ${
+        className={`absolute bottom-4 left-4 max-w-[68%] sm:max-w-[62%] w-fit bg-[#14181C]/90 px-4 py-2.5 transition-opacity duration-300 sm:group-hover:opacity-0 ${
           isRevealed ? "opacity-0" : "opacity-100"
         }`}
       >

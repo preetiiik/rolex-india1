@@ -5,15 +5,15 @@ import Reveal from "./Reveal";
 const diversification = [
   "Furnace Tap Hole Drilling Equipment",
   "Precision Machined Components such as Idler Shafts, Mixer Shafts, and Fan Shafts",
-  "Sheet Metal Products, including Idler Bearing Housings",
+  "Sheet Metal Products, including Idler Bearing Housing",
 ];
 
 export default function About() {
   return (
-    <section id="about" className="bg-white overflow-hidden">
+    <section id="about" className="bg-white">
       {/* Parallax banner: background stays fixed while heading scrolls over it */}
       <div
-        className="relative h-[46vh] sm:h-[56vh] lg:h-[64vh] mb-12 sm:mb-16 bg-cover bg-center bg-fixed flex items-end"
+        className="relative h-[46vh] sm:h-[56vh] lg:h-[64vh] mb-12 sm:mb-16 bg-cover bg-center bg-fixed flex items-end overflow-hidden"
         style={{ backgroundImage: `url(${aboutImg})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-[#14282E]/85 via-[#14282E]/50 to-[#14282E]/30" />
@@ -60,9 +60,9 @@ export default function About() {
                 including:
               </p>
 
-              <ul className="space-y-3">
+              <ul className="space-y-1.5">
                 {diversification.map((d) => (
-                  <li key={d} className="flex gap-3 text-[14px] sm:text-[15px] leading-[1.5] font-medium text-gray-800 bg-[#EAF1F1]  px-4 py-3">
+                  <li key={d} className="flex gap-2 text-[12.5px] sm:text-[13px] leading-[1.3] font-medium text-gray-800 bg-[#EAF1F1]  px-3 py-2">
                     <span className="text-[#2F6F7E] font-bold flex-shrink-0">→</span>
                     <span>{d}</span>
                   </li>

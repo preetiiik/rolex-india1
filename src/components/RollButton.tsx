@@ -7,6 +7,7 @@ interface RollButtonProps {
   size?: "sm" | "md";
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 export default function RollButton({
@@ -16,6 +17,7 @@ export default function RollButton({
   size = "md",
   className = "",
   type = "button",
+  disabled = false,
 }: RollButtonProps) {
   const bg =
     variant === "dark"
@@ -43,7 +45,10 @@ export default function RollButton({
     <button
       type={type}
       onClick={onClick}
-      className={`group inline-flex items-center gap-3  ${bg} ${pad} ${fontSize} font-medium transition-colors duration-300 ${className}`}
+      disabled={disabled}
+      className={`group inline-flex items-center gap-3  ${bg} ${pad} ${fontSize} font-medium transition-colors duration-300 ${
+        disabled ? "opacity-60 cursor-not-allowed" : ""
+      } ${className}`}
     >
       <span className="overflow-hidden h-[18px] sm:h-[20px]">
         <span

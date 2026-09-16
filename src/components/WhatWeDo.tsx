@@ -73,7 +73,7 @@ export default function WhatWeDo() {
   return (
     <section className="relative overflow-hidden bg-white">
       {/* Desktop/tablet: full-bleed feature image with floating overlay card (unchanged from original) */}
-      <div className="hidden sm:block relative w-full h-[64vh] bg-gray-900">
+      <div className="hidden sm:block relative w-full h-[80vh] lg:h-[88vh] bg-gray-900">
         {whatWeDo.map((item, index) => (
           <img
             key={item.n}
@@ -86,13 +86,14 @@ export default function WhatWeDo() {
         ))}
         <div className="absolute inset-0 bg-black/10" />
 
-        <div className="flex absolute inset-0 max-w-[1440px] mx-auto px-8 lg:px-12 items-center justify-end">
+        <div className="flex absolute inset-0 max-w-[1440px] mx-auto px-8 lg:px-12 pb-10 lg:pb-14 items-end justify-end">
           <div className="bg-white shadow-2xl p-8 w-full max-w-[420px]">
             <p className="text-lg font-bold text-gray-900 leading-snug">
               {whatWeDo[activeIndex].text}
             </p>
-            <span className="block w-10 h-[3px] bg-[#2F6F7E] mt-4 mb-4" />
-            <Dots />
+            <div className="mt-4 mb-4">
+              <Dots />
+            </div>
           </div>
         </div>
       </div>
@@ -115,8 +116,9 @@ export default function WhatWeDo() {
           <p className="text-[12px] font-bold text-gray-900 leading-snug">
             {whatWeDo[activeIndex].text}
           </p>
-          <span className="block w-10 h-[3px] bg-[#2F6F7E] mt-4 mb-4" />
-          <Dots />
+          <div className="mt-4 mb-4">
+            <Dots />
+          </div>
         </div>
       </div>
 
