@@ -762,7 +762,7 @@ export default function Contact() {
                   "clamp(2rem, 5vw, 3.5rem)",
               }}
             >
-              Contact
+              Contact Us
             </h2>
 
             <span className="inline-block w-14 h-[3px] bg-[#2F6F7E] mt-5" />

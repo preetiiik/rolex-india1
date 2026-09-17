@@ -193,10 +193,10 @@ export function PrivacyPolicy() {
             information, you can contact us using the details below.
           </p>
           <div className={`${bodyClass} mt-4 space-y-1`}>
-            <p>[Official Legal Company Name]</p>
-            <p>Registered Address: [Official Registered Address]</p>
-            <p>Privacy/Contact Email: [Official Privacy or Contact Email]</p>
-            <p>Phone: [Official Phone Number, if applicable]</p>
+            <p>Rolex India</p>
+            <p>Registered Address: B-348, Industrial Estate Gokul Rd, Industrial Estate, Hubballi, Karnataka 580030, India</p>
+            <p>Privacy/Contact Email: rolexindiahbl@gmail.com</p>
+            <p>Phone: +91 9620664429 | +91 9738347599</p>
           </div>
         </section>
 
