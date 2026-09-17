@@ -16,7 +16,17 @@ type FieldConfig = {
   label: string;
   required: boolean;
   type?: string;
+  /**
+   * Soft limit. Going past this does NOT break the form,
+   * it shows a clear validation message.
+   */
   maxLength?: number;
+  /**
+   * Hard cap applied while typing / pasting so a huge paste can
+   * never blow up the input, the state or the request payload.
+   */
+  hardLimit?: number;
+  placeholder?: string;
   inputMode?: "text" | "numeric" | "email" | "tel";
   options?: string[];
   validate: (value: string) => string;
@@ -26,12 +36,25 @@ type FieldConfig = {
    VALIDATION PATTERNS
 ===================================================== */
 
-// Letters and spaces only
-const NAME_PATTERN = /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/;
+/*
+  Entity / company name.
+  Letters, digits, spaces and common business punctuation.
+  Digits ARE allowed: "3M", "H2O Coolers", "24x7 Engineering".
+*/
+const ENTITY_PATTERN = /^[A-Za-z0-9][A-Za-z0-9 .,&'()\-/]*$/;
 
-// Email
+/*
+  Person name. Letters, spaces, apostrophe, hyphen and dot.
+  ("Dr. O'Brien-Smith")
+*/
+const PERSON_PATTERN = /^[A-Za-z][A-Za-z .'-]*$/;
+
+/*
+  Email. Stricter than [^\s@]+@[^\s@]+\.[^\s@]+ so that
+  missing username, missing domain and missing TLD are all caught.
+*/
 const EMAIL_PATTERN =
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,63}$/;
 
 // Starts with 6-9, followed by exactly 9 more digits (10 digits total)
 const PHONE_PATTERN = /^[6-9][0-9]{9}$/;
@@ -39,10 +62,74 @@ const PHONE_PATTERN = /^[6-9][0-9]{9}$/;
 // Numbers only
 const QUANTITY_PATTERN = /^[0-9]+$/;
 
+const MAX_QUANTITY = 1_000_000;
+
+/* =====================================================
+   SAFETY HELPERS  (XSS / injection)
+===================================================== */
+
+/*
+  Anything that looks like markup, an inline event handler,
+  an HTML entity or a script-bearing URL scheme.
+
+  NOTE: values are always rendered as plain text by React
+  (no dangerouslySetInnerHTML / innerHTML anywhere in this file),
+  so nothing typed here can ever execute. These checks exist so the
+  user gets a clear message instead of silently sending junk,
+  and so the payload we POST is clean.
+*/
+const MARKUP_PATTERN = /[<>]/;
+const SCRIPT_LIKE_PATTERN =
+  /(<\s*\/?\s*[a-z!]|javascript\s*:|vbscript\s*:|data\s*:\s*text\/html|on[a-z]+\s*=|&#x?[0-9a-f]+;?|&lt;|&gt;)/i;
+
+const checkUnsafeContent = (value: string): string => {
+  if (MARKUP_PATTERN.test(value)) {
+    return "The characters < and > are not allowed";
+  }
+
+  if (SCRIPT_LIKE_PATTERN.test(value)) {
+    return "HTML or script content is not allowed";
+  }
+
+  return "";
+};
+
+/*
+  Strip control characters and zero-width characters, and
+  normalise whitespace. Used on every keystroke and again
+  before the value leaves the browser.
+*/
+const sanitizeInput = (value: string): string =>
+  value
+    // eslint-disable-next-line no-control-regex
+    .replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200D\uFEFF]/g, "")
+    .replace(/[ \t]{2,}/g, " ");
+
+const lengthError = (
+  label: string,
+  value: string,
+  maxLength: number
+): string =>
+  value.length > maxLength
+    ? `${label} must be ${maxLength} characters or less (currently ${value.length})`
+    : "";
 
 /* =====================================================
    FORM FIELDS
 ===================================================== */
+
+const MATERIALS = [
+  "Mild Steel (MS)",
+  "Stainless Steel (SS)",
+  "Carbon Steel",
+  "Alloy Steel",
+  "Free Cutting Steel (FCS)",
+  "EN8",
+  "EN9",
+  "EN19",
+  "EN24",
+  "Spring Steel",
+];
 
 const fields: FieldConfig[] = [
   {
@@ -50,21 +137,33 @@ const fields: FieldConfig[] = [
     label: "Entity Name",
     required: true,
     maxLength: 100,
+    hardLimit: 300,
     inputMode: "text",
+    placeholder: "e.g. 3M Industries Pvt Ltd",
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Entity name is required";
       }
 
+      const unsafe = checkUnsafeContent(v);
+      if (unsafe) return unsafe;
+
+      const tooLong = lengthError("Entity name", v, 100);
+      if (tooLong) return tooLong;
+
       if (v.length < 2) {
         return "Entity name must contain at least 2 characters";
       }
 
-      if (!NAME_PATTERN.test(v)) {
-        return "Entity name should contain letters and spaces only";
+      if (!ENTITY_PATTERN.test(v)) {
+        return "Entity name can use letters, numbers, spaces and . , & ' ( ) - / only";
+      }
+
+      if (!/[A-Za-z]/.test(v)) {
+        return "Entity name must contain at least one letter";
       }
 
       return "";
@@ -76,21 +175,33 @@ const fields: FieldConfig[] = [
     label: "Contact Person",
     required: true,
     maxLength: 100,
+    hardLimit: 300,
     inputMode: "text",
+    placeholder: "e.g. Anita Sharma",
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Contact person is required";
       }
 
+      const unsafe = checkUnsafeContent(v);
+      if (unsafe) return unsafe;
+
+      const tooLong = lengthError("Contact person", v, 100);
+      if (tooLong) return tooLong;
+
       if (v.length < 2) {
         return "Contact person must contain at least 2 characters";
       }
 
-      if (!NAME_PATTERN.test(v)) {
-        return "Contact person should contain letters and spaces only";
+      if (/[0-9]/.test(v)) {
+        return "Contact person should not contain numbers";
+      }
+
+      if (!PERSON_PATTERN.test(v)) {
+        return "Contact person should contain letters, spaces, apostrophes and hyphens only";
       }
 
       return "";
@@ -103,17 +214,74 @@ const fields: FieldConfig[] = [
     required: true,
     type: "email",
     maxLength: 150,
+    hardLimit: 320,
     inputMode: "email",
+    placeholder: "e.g. name@company.com",
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Email ID is required";
       }
 
+      const unsafe = checkUnsafeContent(v);
+      if (unsafe) return unsafe;
+
+      const tooLong = lengthError("Email ID", v, 150);
+      if (tooLong) return tooLong;
+
+      if (/\s/.test(v)) {
+        return "Email address cannot contain spaces";
+      }
+
+      const atCount = (v.match(/@/g) || []).length;
+
+      if (atCount === 0) {
+        return "Email address must contain @ (e.g. name@company.com)";
+      }
+
+      if (atCount > 1) {
+        return "Email address must contain only one @";
+      }
+
+      const [localPart, domainPart] = v.split("@");
+
+      // Missing username, e.g. "@example.com"
+      if (!localPart) {
+        return "Email address is missing the part before @";
+      }
+
+      // Missing domain, e.g. "user@"
+      if (!domainPart) {
+        return "Email address is missing the domain after @ (e.g. company.com)";
+      }
+
+      if (!domainPart.includes(".")) {
+        return "Email domain must include a dot (e.g. company.com)";
+      }
+
+      if (v.includes("..")) {
+        return "Email address cannot contain two dots in a row";
+      }
+
+      if (
+        localPart.startsWith(".") ||
+        localPart.endsWith(".") ||
+        domainPart.startsWith(".") ||
+        domainPart.startsWith("-") ||
+        domainPart.endsWith(".") ||
+        domainPart.endsWith("-")
+      ) {
+        return "Email address cannot start or end a part with a dot or hyphen";
+      }
+
+      if (localPart.length > 64) {
+        return "The part before @ is too long";
+      }
+
       if (!EMAIL_PATTERN.test(v)) {
-        return "Enter a valid email address";
+        return "Enter a valid email address (e.g. name@company.com)";
       }
 
       return "";
@@ -126,10 +294,12 @@ const fields: FieldConfig[] = [
     required: true,
     type: "tel",
     maxLength: 10,
+    hardLimit: 10,
     inputMode: "numeric",
+    placeholder: "10-digit mobile number",
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Phone number is required";
@@ -159,11 +329,13 @@ const fields: FieldConfig[] = [
     name: "quantity",
     label: "Quantity Required",
     required: true,
-    maxLength: 10,
+    maxLength: 7,
+    hardLimit: 9,
     inputMode: "numeric",
+    placeholder: "e.g. 500",
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Quantity is required";
@@ -173,8 +345,20 @@ const fields: FieldConfig[] = [
         return "Quantity should contain numbers only";
       }
 
-      if (Number(v) <= 0) {
+      const numeric = Number(v);
+
+      if (!Number.isFinite(numeric)) {
+        return "Enter a valid quantity";
+      }
+
+      if (numeric <= 0) {
         return "Quantity must be greater than 0";
+      }
+
+      if (numeric > MAX_QUANTITY) {
+        return `Quantity must be ${MAX_QUANTITY.toLocaleString(
+          "en-IN"
+        )} or less`;
       }
 
       return "";
@@ -185,13 +369,24 @@ const fields: FieldConfig[] = [
     name: "product",
     label: "Product Required",
     required: true,
+    placeholder: "Select product",
     options: products.map((product) => product.title),
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Please select a product";
+      }
+
+      /*
+        Only a value from the allow-list is acceptable. This blocks
+        any tampered/injected <option> value.
+      */
+      const allowed = products.map((product) => product.title);
+
+      if (!allowed.includes(v)) {
+        return "Please select a product from the list";
       }
 
       return "";
@@ -202,24 +397,18 @@ const fields: FieldConfig[] = [
     name: "material",
     label: "Material",
     required: true,
-    options: [
-      "Mild Steel (MS)",
-      "Stainless Steel (SS)",
-      "Carbon Steel",
-      "Alloy Steel",
-      "Free Cutting Steel (FCS)",
-      "EN8",
-      "EN9",
-      "EN19",
-      "EN24",
-      "Spring Steel",
-    ],
+    placeholder: "Select material",
+    options: MATERIALS,
 
     validate: (value) => {
-      const v = value.trim();
+      const v = sanitizeInput(value).trim();
 
       if (!v) {
         return "Please select a material";
+      }
+
+      if (!MATERIALS.includes(v)) {
+        return "Please select a material from the list";
       }
 
       return "";
@@ -231,6 +420,8 @@ const emptyValues = Object.fromEntries(
   fields.map((field) => [field.name, ""])
 );
 
+const getField = (name: string) =>
+  fields.find((item) => item.name === name);
 
 /* =====================================================
    CONTACT COMPONENT
@@ -268,30 +459,37 @@ export default function Contact() {
 
   const handleChange = (
     name: string,
-    value: string
+    rawValue: string
   ) => {
+    const field = getField(name);
+
     /*
-      Phone:
-      Only allow digits and maximum 10 characters.
+      Always strip control / zero-width characters first.
+      Markup characters are NOT stripped silently - they are
+      reported through validation so the user knows why.
+    */
+    let value = sanitizeInput(rawValue);
+
+    /*
+      Phone: digits only.
     */
     if (name === "phone") {
-      value = value.replace(/\D/g, "").slice(0, 10);
+      value = value.replace(/\D/g, "");
     }
 
     /*
-      Quantity:
-      Only allow numbers.
+      Quantity: digits only.
     */
     if (name === "quantity") {
       value = value.replace(/\D/g, "");
     }
 
     /*
-      Entity Name / Contact Person:
-      Only allow letters and spaces.
+      Hard cap so an oversized paste can never break
+      the input, the state or the payload.
     */
-    if (name === "entityName" || name === "contactPerson") {
-      value = value.replace(/[^A-Za-z\s]/g, "");
+    if (field?.hardLimit) {
+      value = value.slice(0, field.hardLimit);
     }
 
     setValues((previous) => ({
@@ -299,17 +497,21 @@ export default function Contact() {
       [name]: value,
     }));
 
+    if (!field) return;
+
     /*
-      If the user has already interacted with
-      the field, validate it immediately.
+      Validate live once the user has interacted with the field,
+      while an error is already showing, or as soon as the value
+      goes past the soft limit (so a big paste explains itself
+      instead of being silently truncated).
     */
-    if (touched[name]) {
-      const field = fields.find(
-        (item) => item.name === name
-      );
+    const shouldValidateNow =
+      touched[name] ||
+      Boolean(errors[name]) ||
+      (field.maxLength !== undefined &&
+        value.trim().length > field.maxLength);
 
-      if (!field) return;
-
+    if (shouldValidateNow) {
       setErrors((previous) => ({
         ...previous,
         [name]: field.validate(value),
@@ -328,13 +530,11 @@ export default function Contact() {
       [name]: true,
     }));
 
-    const field = fields.find(
-      (item) => item.name === name
-    );
+    const field = getField(name);
 
     if (!field) return;
 
-    const error = field.validate(values[name]);
+    const error = field.validate(values[name] ?? "");
 
     setErrors((previous) => ({
       ...previous,
@@ -352,7 +552,10 @@ export default function Contact() {
   ) => {
     event.preventDefault();
 
+    if (isSubmitting) return;
+
     setSubmitError("");
+    setShowSuccessPopup(false);
 
     const nextErrors: Record<string, string> = {};
 
@@ -361,7 +564,7 @@ export default function Contact() {
     */
     fields.forEach((field) => {
       nextErrors[field.name] =
-        field.validate(values[field.name]);
+        field.validate(values[field.name] ?? "");
     });
 
     setErrors(nextErrors);
@@ -402,9 +605,47 @@ export default function Contact() {
       return;
     }
 
+    /*
+      Build a clean payload: sanitised, trimmed, length-capped.
+      Nothing raw from the DOM is forwarded.
+    */
+    const payload = Object.fromEntries(
+      fields.map((field) => {
+        const clean = sanitizeInput(
+          values[field.name] ?? ""
+        ).trim();
+
+        return [
+          field.name,
+          field.maxLength
+            ? clean.slice(0, field.maxLength)
+            : clean,
+        ];
+      })
+    );
+
     setIsSubmitting(true);
 
+    /*
+      Abort the request if the network hangs, so the user
+      always gets an answer instead of an endless spinner.
+    */
+    const controller = new AbortController();
+    const timeoutId = setTimeout(
+      () => controller.abort(),
+      15000
+    );
+
     try {
+      if (
+        typeof navigator !== "undefined" &&
+        navigator.onLine === false
+      ) {
+        throw new Error(
+          "You appear to be offline. Please check your connection and try again."
+        );
+      }
+
       const response = await fetch(
         "/api/contact",
         {
@@ -412,31 +653,54 @@ export default function Contact() {
 
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
 
-          body: JSON.stringify(values),
+          body: JSON.stringify(payload),
+          signal: controller.signal,
         }
       );
 
-      const result = await response.json();
+      /*
+        The server may return HTML (proxy error page), an empty
+        body, or malformed JSON. Parse defensively - a parse
+        failure must never be mistaken for success.
+      */
+      const rawBody = await response.text();
 
-      if (!response.ok || !result.success) {
+      let result: { success?: boolean; message?: string } | null =
+        null;
+
+      if (rawBody) {
+        try {
+          result = JSON.parse(rawBody);
+        } catch {
+          result = null;
+        }
+      }
+
+      if (!response.ok) {
         throw new Error(
-          result.message ||
-            "Unable to submit enquiry."
+          result?.message ||
+            `Your enquiry could not be sent (error ${response.status}). Please try again or email us directly.`
+        );
+      }
+
+      if (!result || result.success !== true) {
+        throw new Error(
+          result?.message ||
+            "We could not confirm that your enquiry was received. Please try again or email us directly."
         );
       }
 
       /*
-        Successful submission.
+        Successful submission - only reached on an explicit
+        ok + success:true response.
       */
       setValues(emptyValues);
       setErrors({});
       setTouched({});
 
-      /*
-        Show success popup.
-      */
       setShowSuccessPopup(true);
 
     } catch (error) {
@@ -445,12 +709,27 @@ export default function Contact() {
         error
       );
 
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again."
-      );
+      /*
+        Never show the success popup on failure.
+      */
+      setShowSuccessPopup(false);
+
+      let message =
+        "Something went wrong while sending your enquiry. Please try again.";
+
+      if (error instanceof DOMException && error.name === "AbortError") {
+        message =
+          "The request timed out. Please check your connection and try again.";
+      } else if (error instanceof TypeError) {
+        message =
+          "Network error - your enquiry was not sent. Please check your connection and try again.";
+      } else if (error instanceof Error && error.message) {
+        message = error.message;
+      }
+
+      setSubmitError(message);
     } finally {
+      clearTimeout(timeoutId);
       setIsSubmitting(false);
     }
   };
@@ -458,6 +737,9 @@ export default function Contact() {
 
   /* ===================================================
      JSX
+     All values below are rendered as text by React.
+     No dangerouslySetInnerHTML is used anywhere, so any
+     markup a user types is shown literally, never executed.
   =================================================== */
 
   return (
@@ -640,7 +922,8 @@ export default function Contact() {
                           }`}
                         >
                           <option value="" disabled>
-                            Select material
+                            {field.placeholder ??
+                              `Select ${field.label.toLowerCase()}`}
                           </option>
 
                           {field.options.map((option) => (
@@ -661,9 +944,14 @@ export default function Contact() {
                           value={
                             values[field.name]
                           }
+                          /*
+                            Hard cap only. The softer limit is
+                            reported as a validation message.
+                          */
                           maxLength={
-                            field.maxLength
+                            field.hardLimit ?? field.maxLength
                           }
+                          placeholder={field.placeholder}
                           inputMode={
                             field.inputMode
                           }
@@ -712,7 +1000,7 @@ export default function Contact() {
                       {errors[field.name] && (
                         <span
                           id={`error-${field.name}`}
-                          className="text-[12px] text-red-500"
+                          className="text-[12px] text-red-500 break-words"
                           role="alert"
                         >
                           {errors[field.name]}
@@ -744,13 +1032,14 @@ export default function Contact() {
 
 
                 {/* ===========================
-                    BACKEND ERROR
+                    BACKEND / NETWORK ERROR
                 ============================ */}
 
                 {submitError && (
                   <p
-                    className="mt-4 text-[13px] text-red-500"
+                    className="mt-4 text-[13px] text-red-500 break-words"
                     role="alert"
+                    aria-live="assertive"
                   >
                     {submitError}
                   </p>
