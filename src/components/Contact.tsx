@@ -136,8 +136,8 @@ const fields: FieldConfig[] = [
     name: "entityName",
     label: "Entity Name",
     required: true,
-    maxLength: 100,
-    hardLimit: 300,
+    maxLength: 35,
+    hardLimit: 35,
     inputMode: "text",
     placeholder: "e.g. 3M Industries Pvt Ltd",
 
@@ -151,7 +151,7 @@ const fields: FieldConfig[] = [
       const unsafe = checkUnsafeContent(v);
       if (unsafe) return unsafe;
 
-      const tooLong = lengthError("Entity name", v, 100);
+      const tooLong = lengthError("Entity name", v, 35);
       if (tooLong) return tooLong;
 
       if (v.length < 2) {
@@ -174,8 +174,8 @@ const fields: FieldConfig[] = [
     name: "contactPerson",
     label: "Contact Person",
     required: true,
-    maxLength: 100,
-    hardLimit: 300,
+    maxLength: 35,
+    hardLimit: 35,
     inputMode: "text",
     placeholder: "e.g. Anita Sharma",
 
@@ -189,7 +189,7 @@ const fields: FieldConfig[] = [
       const unsafe = checkUnsafeContent(v);
       if (unsafe) return unsafe;
 
-      const tooLong = lengthError("Contact person", v, 100);
+      const tooLong = lengthError("Contact person", v, 35);
       if (tooLong) return tooLong;
 
       if (v.length < 2) {
@@ -213,8 +213,8 @@ const fields: FieldConfig[] = [
     label: "Email ID",
     required: true,
     type: "email",
-    maxLength: 150,
-    hardLimit: 320,
+    maxLength: 35,
+    hardLimit: 35,
     inputMode: "email",
     placeholder: "e.g. name@company.com",
 
@@ -228,7 +228,7 @@ const fields: FieldConfig[] = [
       const unsafe = checkUnsafeContent(v);
       if (unsafe) return unsafe;
 
-      const tooLong = lengthError("Email ID", v, 150);
+      const tooLong = lengthError("Email ID", v, 35);
       if (tooLong) return tooLong;
 
       if (/\s/.test(v)) {
